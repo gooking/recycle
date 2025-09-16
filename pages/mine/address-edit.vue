@@ -1,14 +1,5 @@
 <template>
 	<view class="address-edit-container">
-		<!-- 页面标题 -->
-		<view class="page-header">
-			<view class="header-left" @tap="navigateBack">
-				<image src="/static/images/address/back.png" mode="aspectFit"></image>
-			</view>
-			<view class="header-title">{{ isEdit ? '编辑地址' : '新增地址' }}</view>
-			<view class="header-right" @tap="saveAddress">保存</view>
-		</view>
-
 		<!-- 表单内容 -->
 		<view class="form-content">
 			<!-- 联系人 -->
@@ -20,40 +11,48 @@
 			<!-- 手机号码 -->
 			<view class="form-item">
 				<text class="form-label">手机号码</text>
-				<input class="form-input" type="number" v-model="formData.phone" placeholder="请输入手机号码" maxlength="11" />
+				<input class="form-input" type="number" v-model="formData.phone" placeholder="请输入手机号码" />
 			</view>
 
-			<!-- 所在地区 -->
-			<view class="form-item" @tap="openLocationPicker">
-				<text class="form-label">所在地区</text>
-				<view class="location-text">
-					<text>{{ formData.province || '请选择省市区' }}</text>
-					<image src="/static/images/address/arrow-right.png" mode="aspectFit"></image>
+			<!-- 地址选择 -->
+			<view class="form-item">
+				<text class="form-label">回收地址</text>
+				<view class="address-select">
+					<input class="form-input" type="text" v-model="formData.address" placeholder="请选择回收地址" />
+					<uni-icons type="location-filled" size="48rpx" @click="chooseLocation"></uni-icons>
 				</view>
 			</view>
 
-			<!-- 详细地址 -->
+			<!-- 门牌号 -->
 			<view class="form-item">
-				<text class="form-label">详细地址</text>
-				<textarea class="form-textarea" v-model="formData.address" placeholder="请输入详细地址" auto-height="true" />
+				<text class="form-label">门牌号</text>
+				<input class="form-input" type="text" v-model="formData.doorNumber" placeholder="请输入门牌号，如：1单元101室" />
 			</view>
 
 			<!-- 地址标签 -->
 			<view class="form-item">
-				<text class="form-label">地址标签</text>
+				<text class="form-label">标签</text>
 				<view class="tag-list">
-					<view class="tag-item" :class="{ active: formData.type === '家' }" @tap="selectTag('家')">家</view>
-					<view class="tag-item" :class="{ active: formData.type === '公司' }" @tap="selectTag('公司')">公司</view>
-					<view class="tag-item" :class="{ active: formData.type === '学校' }" @tap="selectTag('学校')">学校</view>
-					<view class="tag-item" :class="{ active: formData.type === '其他' }" @tap="selectTag('其他')">其他</view>
+					<template v-for="(item,index) in tagList">
+						<view class="tag-item" :class="{ active: formData.tag == item }" @tap="selectTag(item)">
+							<text :class="{ active: formData.tag == item }">{{ item }}</text>
+						</view>
+					</template>
 				</view>
 			</view>
 
-			<!-- 设为默认地址 -->
+			<!-- 默认地址设置 -->
 			<view class="default-setting" @tap="toggleDefault">
-				<text>设为默认收货地址</text>
-				<!-- <switch v-model="formData.isDefault" color="#ff6b35" /> -->
+				<text>设为默认地址</text>
+				<view class="switch" :class="{ active: formData.isDefault }">
+					<view class="switch-circle"></view>
+				</view>
 			</view>
+		</view>
+
+		<!-- 保存按钮 -->
+		<view class="save-button" @click="submit">
+			保存并使用
 		</view>
 	</view>
 </template>
@@ -64,14 +63,13 @@
 			return {
 				isEdit: false,
 				addressId: '',
+				tagList: ['家', '公司', '其他'],
 				formData: {
 					name: '',
 					phone: '',
-					province: '',
-					city: '',
-					district: '',
 					address: '',
-					type: '家',
+					doorNumber: '',
+					tag: '家', // home, company, parents
 					isDefault: false,
 					latitude: '',
 					longitude: ''
@@ -79,13 +77,14 @@
 			}
 		},
 		onLoad(options) {
-			if (options.type === 'edit' && options.id) {
+			// 判断是新增还是编辑
+			if (options && options.id) {
 				uni.setNavigationBarTitle({
 					title: '编辑地址'
 				})
-				this.isEdit = true;
-				this.addressId = options.id;
-				this.getAddressDetail();
+				this.isEdit = true
+				this.addressId = options.id
+				this.getAddressDetail()
 			} else {
 				uni.setNavigationBarTitle({
 					title: '添加新地址'
@@ -93,171 +92,157 @@
 			}
 		},
 		methods: {
+			chooseLocation() {
+				uni.chooseLocation({
+					success: (res) => {
+						this.formData.address = res.address + res.name
+						this.formData.address = res.address + res.name
+						this.formData.latitude = res.latitude
+						this.formData.longitude = res.longitude
+					},
+					fail: (e) => {
+						console.error(e)
+					},
+				})
+			},
 			/**
 			 * 返回上一页
 			 */
 			navigateBack() {
-				uni.navigateBack();
+				uni.navigateBack()
 			},
 
 			/**
-			 * 获取地址详情
-			 * 使用 api工厂 SDK 获取地址详情
-			 * 文档地址: https://api.it120.cc/doc.html
-			 */
-			async getAddressDetail() {
-				// 实际开发中应调用获取地址详情的API
-				// 这里使用模拟数据
-				const addressDetail = {
-					id: this.addressId,
-					name: 'Jasmine',
-					phone: '1466252252',
-					province: '北京市',
-					city: '北京市',
-					district: '海淀区',
-					address: '中关村大厦C座一层大堂',
-					type: '家',
-					isDefault: true,
-					latitude: '39.983354',
-					longitude: '116.306815'
-				};
-
-				this.formData = addressDetail;
-			},
-
-			/**
-			 * 打开地区选择器
-			 */
-			openLocationPicker() {
-				// 实际开发中应调用地区选择器组件或API
-				// 这里使用模拟数据
-				uni.showActionSheet({
-					itemList: ['北京市-北京市-海淀区', '北京市-北京市-朝阳区', '上海市-上海市-浦东新区'],
-					success: (res) => {
-						const location = {
-							0: {
-								province: '北京市',
-								city: '北京市',
-								district: '海淀区'
-							},
-							1: {
-								province: '北京市',
-								city: '北京市',
-								district: '朝阳区'
-							},
-							2: {
-								province: '上海市',
-								city: '上海市',
-								district: '浦东新区'
-							}
-						} [res.tapIndex];
-
-						this.formData.province = `${location.province} ${location.city} ${location.district}`;
-						this.formData.city = location.city;
-						this.formData.district = location.district;
-
-						// 模拟调用地图API获取经纬度
-						this.getLocationByAddress(this.formData.province);
-					}
-				});
-			},
-
-			/**
-			 * 通过地址获取经纬度
-			 * @param {String} address - 地址信息
-			 */
-			async getLocationByAddress(address) {
-				// 使用 api工厂 SDK 通过地址获取经纬度
-				// 文档地址: https://api.it120.cc/doc.html
-				try {
-					const res = await WXAPI.mapAddressToGps({
-						keyWord: address
-					});
-
-					if (res.code === 0 && res.data && res.data.location) {
-						this.formData.latitude = res.data.location.lat;
-						this.formData.longitude = res.data.location.lon;
-					}
-				} catch (error) {
-					console.log('获取经纬度失败:', error);
-					// 模拟数据
-					this.formData.latitude = '39.983354';
-					this.formData.longitude = '116.306815';
-				}
-			},
-
-			/**
-			 * 选择地址标签
-			 * @param {String} tag - 标签名称
+			 * 选择标签
+			 * @param {string} tag 标签类型
 			 */
 			selectTag(tag) {
-				this.formData.type = tag;
+				this.formData.tag = tag
 			},
 
 			/**
 			 * 切换默认地址状态
 			 */
 			toggleDefault() {
-				this.formData.isDefault = !this.formData.isDefault;
+				this.formData.isDefault = !this.formData.isDefault
 			},
 
 			/**
-			 * 保存地址信息
+			 * 获取地址详情
 			 */
-			async saveAddress() {
+			async getAddressDetail() {
+				// https://www.yuque.com/apifm/nu0f75/gszs9g
+				uni.showLoading({
+					title: ''
+				})
+				const res = await this.$wxapi.addressDetail(this.token, this.addressId)
+				uni.hideLoading()
+				if(res.code != 0) {
+					uni.showModal({
+						content: '地址记录不存在',
+						showCancel: false,
+						success: () => {
+							uni.navigateBack()
+						}
+					})
+					return
+				}
+				this.formData.name = res.data.info.linkMan
+				this.formData.phone = res.data.info.mobile
+				this.formData.latitude = res.data.info.latitude
+				this.formData.longitude = res.data.info.longitude
+				this.formData.address = res.data.info.address
+				this.formData.isDefault = res.data.info.isDefault
+				this.formData.doorNumber = res.data.info.menpai
+				this.formData.tag = res.data.info.code
+			},
+
+			/**
+			 * 保存地址
+			 */
+			async submit() {
 				// 表单验证
 				if (!this.formData.name) {
 					return uni.showToast({
 						title: '请输入联系人姓名',
 						icon: 'none'
-					});
+					})
 				}
-
-				if (!this.formData.phone || this.formData.phone.length !== 11) {
+				if (!this.formData.phone) {
 					return uni.showToast({
 						title: '请输入正确的手机号码',
 						icon: 'none'
-					});
+					})
 				}
-
-				if (!this.formData.province) {
+				if (!this.formData.address || !this.formData.latitude || !this.formData.longitude) {
 					return uni.showToast({
-						title: '请选择所在地区',
+						title: '请选择回收地址',
 						icon: 'none'
-					});
+					})
 				}
-
-				if (!this.formData.address) {
+				if (!this.formData.doorNumber) {
 					return uni.showToast({
-						title: '请输入详细地址',
+						title: '请输入门牌号',
 						icon: 'none'
-					});
+					})
 				}
-
-				try {
-					// 实际开发中应调用保存地址的API
-					// 这里使用模拟操作
-					setTimeout(() => {
+				uni.showLoading({
+					title: ''
+				})
+				if (this.addressId) {
+					// https://www.yuque.com/apifm/nu0f75/cv6gh7
+					const res = await this.$wxapi.updateAddress({
+						token: this.token,
+						id: this.addressId,
+						address: this.formData.address,
+						linkMan: this.formData.name,
+						mobile: this.formData.phone,
+						isDefault: this.formData.isDefault,
+						menpai: this.formData.doorNumber,
+						latitude: this.formData.latitude,
+						longitude: this.formData.longitude,
+						code: this.formData.tag,
+					})
+					if (res.code != 0) {
 						uni.showToast({
-							title: this.isEdit ? '修改成功' : '添加成功',
-							icon: 'success',
-							duration: 1500,
-							success: () => {
-								// 返回上一页并刷新地址列表
-								setTimeout(() => {
-									uni.navigateBack();
-								}, 1500);
-							}
-						});
-					}, 500);
-				} catch (error) {
-					console.log('保存地址失败:', error);
-					uni.showToast({
-						title: '保存失败，请重试',
-						icon: 'none'
-					});
+							title: res.msg,
+							icon: 'none'
+						})
+						return
+					}
+				} else {
+					// https://www.yuque.com/apifm/nu0f75/fcx2mf
+					const res = await this.$wxapi.addAddress({
+						token: this.token,
+						provinceId: '0',
+						cityId: '0',
+						address: this.formData.address,
+						linkMan: this.formData.name,
+						mobile: this.formData.phone,
+						isDefault: this.formData.isDefault,
+						menpai: this.formData.doorNumber,
+						latitude: this.formData.latitude,
+						longitude: this.formData.longitude,
+						code: this.formData.tag,
+					})
+					if (res.code != 0) {
+						uni.showToast({
+							title: res.msg,
+							icon: 'none'
+						})
+						return
+					}
 				}
-			}
+				uni.hideLoading()
+				uni.showModal({
+					content: '设置成功',
+					showCancel: false,
+					success: () => {
+						this.vuex('needRefresh', true)
+						uni.navigateBack()
+					}
+				})
+			},
 		}
 	}
 </script>
@@ -266,128 +251,175 @@
 	.address-edit-container {
 		background-color: #f5f5f5;
 		min-height: 100vh;
-	}
 
-	.page-header {
-		height: 96rpx;
-		background-color: #fff;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 0 32rpx;
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 999;
-		box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
-	}
+		.page-header {
+			height: 88rpx;
+			background-color: #fff;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 32rpx;
+			position: relative;
 
-	.header-left {
-		width: 40rpx;
-		height: 40rpx;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+			.header-left {
+				width: 88rpx;
+				height: 88rpx;
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
 
-	.header-left image {
-		width: 40rpx;
-		height: 40rpx;
-	}
+				image {
+					width: 48rpx;
+					height: 48rpx;
+				}
+			}
 
-	.header-title {
-		font-size: 36rpx;
-		color: #333;
-	}
+			.header-title {
+				font-size: 34rpx;
+				font-weight: 600;
+				color: #333;
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+			}
 
-	.header-right {
-		font-size: 32rpx;
-		color: #ff6b35;
-	}
+			.header-right {
+				width: 88rpx;
+				height: 88rpx;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				font-size: 32rpx;
+				color: #48C5A8;
+			}
+		}
 
-	.form-content {
-		padding-top: 120rpx;
-		padding-bottom: 40rpx;
-	}
+		.form-content {
+			margin-top: 20rpx;
+			background-color: #fff;
 
-	.form-item {
-		background-color: #fff;
-		margin-bottom: 1rpx;
-		padding: 0 32rpx;
-	}
+			.form-item {
+				display: flex;
+				align-items: center;
+				min-height: 112rpx;
+				padding: 0 32rpx;
+				border-bottom: 1px solid #f0f0f0;
 
-	.form-label {
-		display: inline-block;
-		width: 160rpx;
-		font-size: 32rpx;
-		color: #333;
-		line-height: 120rpx;
-	}
+				.form-label {
+					width: 160rpx;
+					font-size: 32rpx;
+					color: #333;
+				}
 
-	.form-input {
-		display: inline-block;
-		width: 500rpx;
-		font-size: 32rpx;
-		color: #333;
-		line-height: 120rpx;
-	}
+				.form-input {
+					flex: 1;
+					font-size: 32rpx;
+					color: #333;
+					height: 100%;
+					padding: 0;
+				}
 
-	.location-text {
-		display: inline-block;
-		width: 500rpx;
-		font-size: 32rpx;
-		color: #999;
-		line-height: 120rpx;
-		text-align: right;
-	}
+				.address-select {
+					flex: 1;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
 
-	.location-text image {
-		width: 24rpx;
-		height: 24rpx;
-		margin-left: 12rpx;
-		vertical-align: middle;
-	}
+					.address-text {
+						font-size: 32rpx;
+						color: #333;
+					}
 
-	.form-textarea {
-		width: 500rpx;
-		font-size: 32rpx;
-		color: #333;
-		padding: 20rpx 0;
-		line-height: 48rpx;
-	}
+					.address-placeholder {
+						font-size: 32rpx;
+						color: #999;
+					}
 
-	.tag-list {
-		display: inline-block;
-		width: 500rpx;
-		padding: 20rpx 0;
-	}
+					image {
+						width: 32rpx;
+						height: 32rpx;
+					}
+				}
 
-	.tag-item {
-		display: inline-block;
-		font-size: 28rpx;
-		color: #666;
-		background-color: #f5f5f5;
-		padding: 12rpx 32rpx;
-		border-radius: 24rpx;
-		margin-right: 20rpx;
-		margin-bottom: 20rpx;
-	}
+				.tag-list {
+					flex: 1;
+					display: flex;
 
-	.tag-item.active {
-		color: #ff6b35;
-		background-color: #fff0e8;
-	}
+					.tag-item {
+						padding: 12rpx 32rpx;
+						border-radius: 40rpx;
+						background-color: #f5f5f5;
+						margin-right: 32rpx;
 
-	.default-setting {
-		background-color: #fff;
-		margin-top: 20rpx;
-		padding: 0 32rpx;
-		height: 120rpx;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 32rpx;
-		color: #333;
+						text {
+							font-size: 28rpx;
+							color: #666;
+						}
+
+						&.active {
+							background-color: #dbfcfe;
+
+							text.active {
+								color: #48C5A8;
+							}
+						}
+					}
+				}
+			}
+
+			.default-setting {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				height: 112rpx;
+				padding: 0 32rpx;
+
+				text {
+					font-size: 32rpx;
+					color: #333;
+				}
+
+				.switch {
+					width: 88rpx;
+					height: 48rpx;
+					background-color: #e5e5e5;
+					border-radius: 24rpx;
+					position: relative;
+					transition: background-color 0.3s;
+
+					.switch-circle {
+						width: 40rpx;
+						height: 40rpx;
+						background-color: #fff;
+						border-radius: 50%;
+						position: absolute;
+						top: 4rpx;
+						left: 4rpx;
+						transition: transform 0.3s;
+					}
+
+					&.active {
+						background-color: #48C5A8;
+
+						.switch-circle {
+							transform: translateX(40rpx);
+						}
+					}
+				}
+			}
+		}
+
+		.save-button {
+			margin: 60rpx 32rpx;
+			height: 96rpx;
+			background-color: #48C5A8;
+			border-radius: 48rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 32rpx;
+			color: #fff;
+			font-weight: 600;
+		}
 	}
 </style>

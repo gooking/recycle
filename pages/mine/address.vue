@@ -4,22 +4,22 @@
 		<view class="address-list">
 			<!-- 默认地址 -->
 			<uni-swipe-action>
-				<page-box-empty title="暂无地址" subTitle="请先添加上门地址哦~"></page-box-empty>
+				<page-box-empty v-if="!addressList || addressList.length == 0" title="暂无地址" subTitle="请先添加上门地址哦~"></page-box-empty>
 				<template v-for="(item, index) in addressList">
 					<uni-swipe-action-item :right-options="options" @click="onClick"
 						@change="swipeChange($event, index)">
-						<view class="address-item" :class="item.isDefault ? 'active' : ''">
+						<view class="address-item" :class="item.isDefault ? 'active' : ''" @click="selectAddress">
 							<view class="address-main">
 								<view class="address-header">
 									<view class="address-name">
-										<text class="user-name">{{ item.name }}</text>
-										<text class="user-phone">{{ item.phone }}</text>
+										<text class="user-name">{{ item.linkMan }}</text>
+										<text class="user-phone">{{ item.mobile }}</text>
 									</view>
 									<text class="default-tag" v-if="item.isDefault">默认</text>
 								</view>
 
 								<view class="address-content">
-									<text class="address-type">{{ item.type }}</text>
+									<text class="address-type">{{ item.code }}</text>
 									<text class="address-detail">{{ item.address }}</text>
 								</view>
 							</view>
@@ -62,7 +62,13 @@
 			}
 		},
 		onLoad() {
-			this.getAddressList();
+			this.getAddressList()
+		},
+		onShow() {
+			if(this.needRefresh) {
+				this.vuex('needRefresh', false)
+				this.getAddressList()
+			}
 		},
 		methods: {
 			onClick(e) {
@@ -121,32 +127,32 @@
 			deleteAddress(index) {
 				uni.showModal({
 					content: '确定要删除该地址吗？',
-					success: (res) => {
+					success: async (res) => {
 						if (res.confirm) {
-							// 实际开发中应调用删除地址的API
-							this.addressList.splice(index, 1);
-							uni.showToast({
-								title: '删除成功',
-								icon: 'success'
-							});
+							const item = this.addressList[index]
+							// https://www.yuque.com/apifm/nu0f75/gb0a2k
+							const res = await this.$wxapi.deleteAddress(this.token, item.id)
+							if (res.code == 0) {
+								this.addressList.splice(index, 1);
+								uni.showToast({
+									title: '删除成功'
+								});
+							} else {
+								uni.showToast({
+									title: res.msg,
+									icon: 'none'
+								});
+							}
 						}
 					}
 				});
 			},
-
-			/**
-			 * 设置默认地址
-			 * @param {Number} index - 地址索引
-			 */
-			setDefaultAddress(index) {
-				// 实际开发中应调用设置默认地址的API
-				this.addressList.forEach((item, i) => {
-					item.isDefault = i === index;
-				});
-				uni.showToast({
-					title: '设置成功',
-					icon: 'success'
-				});
+			// 选择使用地址
+			async selectAddress(index) {
+				// uni.showToast({
+				// 	title: '设置成功',
+				// 	icon: 'success'
+				// });
 			}
 		}
 	}

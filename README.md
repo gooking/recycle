@@ -29,6 +29,6 @@
 
 # 效果预览
 
-| 下单A | 下单B |
-| :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/16/8ea2136f-4fcf-46c5-9d9f-a32a8c28da22.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/1fad8815-df5f-4dc3-872f-ea09a0c1d3b1.png" width="300px"> |
+| 下单A | 下单B | 收货地址A | 收货地址B |
+| :------: | :------: | :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/16/8ea2136f-4fcf-46c5-9d9f-a32a8c28da22.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/1fad8815-df5f-4dc3-872f-ea09a0c1d3b1.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/a173fcb3-7f74-4f90-885d-fb53a554656d.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/93e14ecb-7cb5-441e-8b01-5912bc7ae993.png" width="300px"> |
