@@ -5,7 +5,7 @@
 			<custom-header></custom-header>
 			<view class="search-container">
 				<view class="address-input-container">
-					<view class="address-input">
+					<view class="address-input" @click="selectAddress">
 						<view class="recycle-icon">
 							<text class="recycle-text">收</text>
 						</view>
@@ -131,6 +131,11 @@
 			afterPicDel(event) {
 				const index = this.fileList.findIndex(ele => ele.path == event.tempFile.path)
 				this.fileList.splice(index, 1)
+			},
+			selectAddress() {
+				uni.navigateTo({
+					url: '/pages/mine/address'
+				})
 			},
 			async submit() {
 				if(!this.address) {

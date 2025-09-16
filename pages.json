@@ -36,6 +36,12 @@
 			"style": {
 				"navigationBarTitleText": "地址管理"
 			}
+		},
+		{
+			"path": "pages/mine/address-edit",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
 	],
 	"globalStyle": {
