@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "dev:h5": "npx uni-app build --platform h5 --mode development --watch",
+    "build:h5": "npx uni-app build --platform h5 --mode production",
+    "dev:mp-weixin": "npx uni-app build --platform mp-weixin --mode development --watch",
+    "build:mp-weixin": "npx uni-app build --platform mp-weixin --mode production"
+  },
+  "dependencies": {
+    "apifm-uniapp": "^25.7.2"
+  }
+}

@@ -1,0 +1,61 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "下单",
+				"navigationStyle": "custom",
+				"backgroundColor": "#2FCCAC",
+				"backgroundColorTop": "#2FCCAC",
+				"backgroundColorBottom": "#2FCCAC",
+				"navigationBarBackgroundColor": "#2FCCAC",
+				"enablePullDownRefresh": true,
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "订单"
+			}
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "废品回收",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#9A9A9A",
+		"selectedColor": "#333333",
+		"backgroundColor": "#FFFFFF",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "下单",
+				"iconPath": "static/images/nav/index-off.png",
+				"selectedIconPath": "static/images/nav/index-on.png"
+			},
+			{
+				"pagePath": "pages/order/order",
+				"text": "订单",
+				"iconPath": "static/images/nav/order-off.png",
+				"selectedIconPath": "static/images/nav/order-on.png"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "我的",
+				"iconPath": "static/images/nav/my-off.png",
+				"selectedIconPath": "static/images/nav/my-on.png"
+			}
+		]
+	},
+	"uniIdRouter": {}
+}
