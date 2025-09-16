@@ -6,12 +6,12 @@
     }">
 			<!-- 城市选择器 -->
 			<view class="city-selector" @click="selectCity">
-				<text class="city-name">{{ city }}</text>
+				<text class="city-name">{{ selectedCity ? selectedCity.name : '请选择' }}</text>
 				<uni-icons type="down" size="32rpx" color="#fff"></uni-icons>
 			</view>
 
 			<!-- Logo区域 -->
-			<view class="logo-container">{{ logoText }}</view>
+			<view class="logo-container">{{ sysconfigMap.mallName }}</view>
 		</view>
 		<!-- 微信小程序胶囊按钮占位区域 -->
 		<view class="capsule-placeholder" :style="{width: menuButtonWidth + 'px'}"></view>
@@ -20,18 +20,18 @@
 
 <script>
 	export default {
-		name: 'customHeader',
+		name: 'customHeaderV1',
 		// 组件属性
-		props: {
-			city: {
-				type: String,
-				default: '重庆市'
-			},
-			logoText: {
-				type: String,
-				default: '艾玛回收'
-			}
-		},
+		// props: {
+		// 	city: {
+		// 		type: String,
+		// 		default: null
+		// 	},
+		// 	logoText: {
+		// 		type: String,
+		// 		default: null
+		// 	}
+		// },
 		// 数据
 		data() {
 			return {
@@ -63,13 +63,41 @@
 				this.headerContentTop = menuButtonInfo.top
 				this.menuButtonWidth = menuButtonInfo.right - menuButtonInfo.left
 				// #endif
+				// 读取城市
+				this._getCurCity()
+			},
+			async _getCurCity() {
+				if(this.selectedCity) {
+					// 已经选过城市了，直接返回
+					return
+				}
+				// 读取用户当前默认城市
+				// https://www.yuque.com/apifm/nu0f75/bm1offkrvslhz43g
+				let res = await this.$wxapi.commonIPV3()
+				if(res.code != 0) {
+					return
+				}
+				const ipAddress = res.data.address
+				// https://www.yuque.com/apifm/nu0f75/puacu17x3za5ycbd
+				res = await this.$wxapi.regionAnalysis(ipAddress)
+				if(res.code != 0) {
+					return
+				}
+				const curCity = res.data.find(ele => ele.level == 2)
+				if(!curCity) {
+					return
+				}
+				this.vuex('selectedCity', curCity)
 			},
 			/**
 			 * 城市选择
 			 * 说明：点击城市名称时的交互
 			 */
 			selectCity() {
-				this.$emit('selectCity')
+				// this.$emit('selectCity')
+				uni.navigateTo({
+					url: '/pages/index/city'
+				})
 			}
 		}
 	}
@@ -77,10 +105,8 @@
 
 <style lang="scss" scoped>
 	.custom-header {
-		background: #3ED09F;
 		width: 100vw;
 		display: flex;
-		padding-bottom: 32rpx;
 	}
 
 	// 头部内容区域
@@ -107,7 +133,7 @@
 			flex: 1;
 			text-align: center;
 			font-weight: 400;
-			font-size: 40rpx;
+			font-size: 34rpx;
 			color: #FFFFFF;
 		}
 	}

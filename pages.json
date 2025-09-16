@@ -14,6 +14,12 @@
 			}
 		},
 		{
+			"path": "pages/index/city",
+			"style": {
+				"navigationBarTitleText": "选择城市"
+			}
+		},
+		{
 			"path": "pages/order/order",
 			"style": {
 				"navigationBarTitleText": "订单"
@@ -23,6 +29,12 @@
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/mine/address",
+			"style": {
+				"navigationBarTitleText": "地址管理"
 			}
 		}
 	],
