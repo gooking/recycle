@@ -8,7 +8,7 @@
 				<template v-for="(item, index) in addressList">
 					<uni-swipe-action-item :right-options="options" @click="onClick"
 						@change="swipeChange($event, index)">
-						<view class="address-item" :class="item.isDefault ? 'active' : ''" @click="selectAddress">
+						<view class="address-item" :class="item.isDefault ? 'active' : ''" @click="selectAddress(index)">
 							<view class="address-main">
 								<view class="address-header">
 									<view class="address-name">
@@ -58,10 +58,12 @@
 							backgroundColor: '#FC5F6D'
 						}
 					},
-				]
+				],
+				from: undefined,
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			this.from = e.from
 			this.getAddressList()
 		},
 		onShow() {
@@ -149,10 +151,11 @@
 			},
 			// 选择使用地址
 			async selectAddress(index) {
-				// uni.showToast({
-				// 	title: '设置成功',
-				// 	icon: 'success'
-				// });
+				if(this.from == 'index') {
+					// 回首页
+					uni.setStorageSync('selectAddress', this.addressList[index])
+					uni.navigateBack()
+				}
 			}
 		}
 	}

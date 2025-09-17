@@ -28,18 +28,41 @@
 			</div>
 			<view class="form">
 				<uni-forms>
-					<uni-forms-item label="期望上门时间" label-width="auto" required>
-						<uni-datetime-picker type="datetime" return-type="timestamp" :start="curTime" v-model="datetime"/>
+					<uni-forms-item v-if="tabIndex == 0" label="期望上门时间" label-width="auto" required>
+						<uni-datetime-picker type="datetime" return-type="string" :start="curTime" v-model="datetime"/>
 					</uni-forms-item>
+					<template v-else>
+						<uni-forms-item label="选择门店" label-width="auto" required></uni-forms-item>
+						<uni-list v-if="shopInfo" :border="false">
+							<uni-list-item
+								:title="shopInfo.name"
+								:note="shopInfo.address"
+								rightText="更换"
+								showArrow
+								clickable
+								to="/pages/index/shop"
+							></uni-list-item>
+						</uni-list>
+						<uni-list v-else :border="false">
+							<uni-list-item
+								title="请选择门店"
+								rightText="选择"
+								showArrow
+								clickable
+								to="/pages/index/shop"
+							></uni-list-item>
+						</uni-list>
+					</template>
+					
 					<view class="divider"></view>
 					<uni-forms-item label="废品类型（多选）" label-width="auto" required></uni-forms-item>
 					<view class="recycle-types">
-						<view v-for="(item, index) in recycleTypes" :key="index" class="type-item"
-							:class="{ selected: selectedTypes.includes(item.value) }" @click="toggleType(item.value)">
+						<view v-for="(item, index) in recycleTypes" :key="item.id" class="type-item"
+							:class="{ selected: selectedTypes.includes(item.id) }" @click="toggleType(item.id)">
 							<text class="type-name"
-								:class="{ selected: selectedTypes.includes(item.value) }">{{ item.name }}</text>
+								:class="{ selected: selectedTypes.includes(item.id) }">{{ item.name }}</text>
 							<text class="type-price"
-								:class="{ selected: selectedTypes.includes(item.value) }">{{ item.price }}</text>
+								:class="{ selected: selectedTypes.includes(item.id) }">{{ item.minPrice }}元/公斤</text>
 						</view>
 					</view>
 					<uni-forms-item label="预计总量" label-width="auto" required>
@@ -87,20 +110,29 @@
 				fileList: [],
 				// 废品类型定义（静态映射，展示用）
 				recycleTypes: [],
-				loading: false, // 按钮是否显示加载中
+				loading: false,
+				shopInfo: undefined, // 门店
 			}
 		},
 		// 生命周期钩子
 		onLoad(e) {
 			this.curTime = dayjs().valueOf()
 			this.initConfigData()
+			this.goodsv2()
+		},
+		onShow() {
+			const selectAddress = uni.getStorageSync('selectAddress')
+			if(selectAddress) {
+				this.address = selectAddress
+			}
+			const selectShop = uni.getStorageSync('selectShop')
+			if(selectShop) {
+				this.shopInfo = selectShop
+			}
 		},
 		// 方法
 		methods: {
 			initConfigData() {
-				if(this.sysconfigMap.recycleTypes) {
-					this.recycleTypes = JSON.parse(this.sysconfigMap.recycleTypes)
-				}
 				if(this.sysconfigMap.weightList) {
 					this.weightList = JSON.parse(this.sysconfigMap.weightList)
 				}
@@ -108,21 +140,29 @@
 					this.serviceList = this.sysconfigMap.serviceList.split(',')
 				}
 				uni.$on('sysconfigOK',data => {
-					this.recycleTypes = JSON.parse(this.sysconfigMap.recycleTypes)
 					this.weightList = JSON.parse(this.sysconfigMap.weightList)
 					this.serviceList = this.sysconfigMap.serviceList.split(',')
 				})
+			},
+			// 获取废品商品列表 https://www.yuque.com/apifm/nu0f75/wg5t98
+			async goodsv2() {
+				const res = await this.$wxapi.goodsv2({
+					token: this.token
+				})
+				if(res.code == 0) {
+					this.recycleTypes = res.data.result
+				}
 			},
 			/**
 			 * 切换废品类型选中状态
 			 * 说明：点击栅格卡片时在 selectedTypes 中增删对应值
 			 */
-			toggleType(type) {
-				const idx = this.selectedTypes.indexOf(type)
+			toggleType(id) {
+				const idx = this.selectedTypes.indexOf(id)
 				if (idx > -1) {
 					this.selectedTypes.splice(idx, 1)
 				} else {
-					this.selectedTypes.push(type)
+					this.selectedTypes.push(id)
 				}
 			},
 			afterPicRead(event) {
@@ -134,17 +174,131 @@
 			},
 			selectAddress() {
 				uni.navigateTo({
-					url: '/pages/mine/address'
+					url: '/pages/mine/address?from=index'
 				})
 			},
 			async submit() {
-				if(!this.address) {
+				if(this.tabIndex == 0 && !this.address) {
 					uni.showToast({
 						title: '请选择上门地址',
 						icon: 'none'
 					})
 					return
 				}
+				if(this.tabIndex == 0 && !this.datetime) {
+					uni.showToast({
+						title: '请选择上门时间',
+						icon: 'none'
+					})
+					return
+				}
+				if(this.tabIndex == 1 && !this.shopInfo) {
+					uni.showToast({
+						title: '请选择回收门店',
+						icon: 'none'
+					})
+					return
+				}
+				if(!this.selectedTypes || this.selectedTypes.length == 0) {
+					uni.showToast({
+						title: '请选择废品类型',
+						icon: 'none'
+					})
+					return
+				}
+				if(!this.weight) {
+					uni.showToast({
+						title: '请选择预计总量',
+						icon: 'none'
+					})
+					return
+				}
+				if(!this.fileList || this.fileList.length == 0) {
+					uni.showToast({
+						title: '请上传废品图片',
+						icon: 'none'
+					})
+					return
+				}
+				if(!this.description) {
+					uni.showToast({
+						title: '请填写废品描述',
+						icon: 'none'
+					})
+					return
+				}
+				uni.showLoading({
+					title: ''
+				})
+				this.loading = true
+				// 批量上传图片
+				const imagesUrls = []
+				if (this.fileList) {
+					for (let index = 0; index < this.fileList.length; index++) {
+						const pic = this.fileList[index]
+						const res = await this.$wxapi.uploadFileV2(this.token, pic.url)
+						if (res.code == 0) {
+							imagesUrls.push(res.data.url)
+						}
+					}
+				}
+				const goodsJsonStr = []
+				this.selectedTypes.forEach(goodsId => {
+					goodsJsonStr.push({
+						goodsId,
+						number: 1,
+					})
+				})
+				const extJsonStr = {
+					'预计总量': this.weight,
+					'废品描述': this.description,
+					'imagesUrls': imagesUrls
+				}
+				const postData = {
+					token: this.token,
+					recycle: true,
+					goodsJsonStr: JSON.stringify(goodsJsonStr),
+					
+					extJsonStr: JSON.stringify(extJsonStr),
+					extType: this.tabIndex == 0 ? '预约上门' : '到店回收',
+				}
+				if(this.tabIndex == 0) {
+					// 预约上门
+					postData.provinceId = this.address.provinceId
+					postData.cityId = this.address.cityId
+					postData.address = this.address.address
+					postData.menpai = this.address.menpai
+					postData.linkMan = this.address.linkMan
+					postData.mobile = this.address.mobile
+					postData.lat = this.address.latitude
+					postData.lng = this.address.longitude
+					postData.attendanDay = this.datetime.split(' ')[0]
+					postData.attendanTime = this.datetime.split(' ')[1]
+				}
+				if(this.tabIndex == 1) {
+					// 到店回收
+					postData.peisongType = 'zq'
+					postData.shopIdZt = this.shopInfo.id
+					postData.shopNameZt = this.shopInfo.name
+				}
+				// https://www.yuque.com/apifm/nu0f75/qx4w98
+				const res = await this.$wxapi.orderCreate(postData)
+				uni.hideLoading()
+				this.loading = false
+				if(res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+					return
+				}
+				uni.showModal({
+					content: this.tabIndex == 0 ? '订单提交成功，我们尽快安排师傅上门' : '下单成功',
+					showCancel: false,
+					success: () => {
+						// todo 跳转到订单详情页面
+					}
+				})
 			},
 		}
 	}

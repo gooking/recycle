@@ -20,6 +20,12 @@
 			}
 		},
 		{
+			"path": "pages/index/shop",
+			"style": {
+				"navigationBarTitleText": "选择门店"
+			}
+		},
+		{
 			"path": "pages/order/order",
 			"style": {
 				"navigationBarTitleText": "订单"

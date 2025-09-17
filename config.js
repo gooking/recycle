@@ -3,7 +3,7 @@
 const config = {
   subDomain: 'recycle',
   merchantId: 150,
-  sysconfigkeys: 'mallName,recycleTypes,weightList,serviceList,kefu_tel,vipid,app_version_ios,assistant_goodsId,share_profile,share_pic',
+  sysconfigkeys: 'mallName,weightList,serviceList,kefu_tel,vipid,app_version_ios,assistant_goodsId,share_profile,share_pic',
 }
 
 export default config
