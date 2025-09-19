@@ -41,6 +41,10 @@
 | :------: | :------: | :------: |
 | <img src="https://dcdn.it120.cc/2025/09/19/d0a11830-9e15-4bed-b4e5-4f9eb2687cfd.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/0bb40764-0bdf-4043-aa7f-4ee79dc1ef70.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/1a6fed59-0e2f-44af-978b-a71a72132651.png" width="300px"> |
 
+| 我的 |
+| :------: |
+| <img src="https://dcdn.it120.cc/2025/09/19/169682a1-a7ea-48d5-b8ee-6a529ae7b303.png" width="300px"> |
+
 ## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/wechat-app-mall)
 - [天使童装（uni-app版本）](https://github.com/gooking/uni-app-mall)  /   [码云镜像](https://gitee.com/javazj/uni-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/uni-app-mall)

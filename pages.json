@@ -49,7 +49,11 @@
 		{
 			"path": "pages/mine/mine",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationBarTitleText": "我的",
+				"backgroundColor": "#F2F7F9",
+				"backgroundColorTop": "#F2F7F9",
+				"backgroundColorBottom": "#F2F7F9",
+				"navigationBarBackgroundColor": "#F2F7F9"
 			}
 		},
 		{
