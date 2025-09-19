@@ -46,7 +46,7 @@
 						<view class="img-info">
 							<view class="img">
 								<image :src="order.extJson['image_1']" mode="aspectFill"></image>
-								<view class="num">共{{ 2 }}张</view>
+								<view class="num">共{{ order.picNumber }}张</view>
 							</view>
 							<view class="order-details">
 								<view class="detail-item">
@@ -139,6 +139,18 @@
 					res.data.orderList.forEach(order => {
 						order.goods = res.data.goodsMap[order.id]
 						order.extJson = res.data.extJsonMap[order.id]
+						if(order.extJson) {
+							let picNumber = 0
+							Object.keys(order.extJson).forEach(key => {
+								if(key.indexOf('image_') == 0) {
+									const num = key.split('_')[1]
+									if(picNumber < num) {
+										picNumber = num
+									}
+								}
+							})
+							order.picNumber = picNumber
+						}
 						order.logistics = res.data.logisticsMap[order.id]
 					})
 					if (this.page == 1) {

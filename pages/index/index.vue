@@ -295,7 +295,9 @@
 					content: this.tabIndex == 0 ? '订单提交成功，我们尽快安排师傅上门' : '下单成功',
 					showCancel: false,
 					success: () => {
-						// todo 跳转到订单详情页面
+						uni.navigateTo({
+							url: '/pages/order/detail?id=' + res.data.id
+						})
 					}
 				})
 			},
