@@ -11,7 +11,7 @@
 		<view class="order-list">
 			<page-box-empty v-if="!list || list.length == 0" title="暂无订单记录"></page-box-empty>
 			<view v-else>
-				<view v-for="(order, orderIndex) in list" :key="order.id" class="order-card">
+				<view v-for="(order, orderIndex) in list" :key="order.id" class="order-card" @click="navigateTo('/pages/order/detail?id=' + order.id)">
 					<!-- 订单头部信息 -->
 					<view class="order-header">
 						<text class="order-time">下单时间：{{ order.dateAdd }}</text>
@@ -28,8 +28,8 @@
 								<view class="name">{{ order.shopNameZt }}</view>
 								<view class="tel">13500000000</view>
 							</view>
-							<image class="icon" src="/static/images/tel.png" mode="widthFix" @click="callMerchant(order)"></image>
-							<image class="icon" src="/static/images/pos.png" mode="widthFix" @click="callMerchant(order)"></image>
+							<image class="icon" src="/static/images/tel.png" mode="widthFix" @click.stop="callMerchant(order)"></image>
+							<image class="icon" src="/static/images/pos.png" mode="widthFix" @click.stop="callMerchant(order)"></image>
 						</view>
 						
 						<view class="type">
@@ -69,9 +69,9 @@
 
 						<!-- 地址信息 -->
 						<view class="address-info">
-							<text class="address-text">{{ order.address || '南山南区杭斌城2栋144号' }}</text>
+							<text v-if="order.logistics" class="address-text">{{ order.logistics.address }}</text>
 							<view v-if="order.status == 0" class="contact-buttons">
-								<view class="contact-btn" @click="cancelOrder(orderIndex, order)">
+								<view class="contact-btn" @click.stop="cancelOrder(orderIndex, order)">
 									<text class="btn-text">取消订单</text>
 								</view>
 							</view>
@@ -139,6 +139,7 @@
 					res.data.orderList.forEach(order => {
 						order.goods = res.data.goodsMap[order.id]
 						order.extJson = res.data.extJsonMap[order.id]
+						order.logistics = res.data.logisticsMap[order.id]
 					})
 					if (this.page == 1) {
 						this.list = res.data.orderList
@@ -233,7 +234,12 @@
 						}
 					}
 				})
-			}
+			},
+			navigateTo(url) {
+				uni.navigateTo({
+					url
+				})
+			},
 		}
 	}
 </script>

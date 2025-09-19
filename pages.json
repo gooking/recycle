@@ -36,6 +36,17 @@
 			}
 		},
 		{
+			"path": "pages/order/detail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": true,
+				"backgroundColor": "#F2F7F9",
+				"backgroundColorTop": "#F2F7F9",
+				"backgroundColorBottom": "#F2F7F9",
+				"navigationBarBackgroundColor": "#F2F7F9"
+			}
+		},
+		{
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "我的"

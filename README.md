@@ -33,13 +33,13 @@
 | :------: | :------: | :------: | :------: |
 | <img src="https://dcdn.it120.cc/2025/09/16/8ea2136f-4fcf-46c5-9d9f-a32a8c28da22.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/1fad8815-df5f-4dc3-872f-ea09a0c1d3b1.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/a173fcb3-7f74-4f90-885d-fb53a554656d.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/93e14ecb-7cb5-441e-8b01-5912bc7ae993.png" width="300px"> |
 
-| 选择门店 | 门店导航 |
-| :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/17/982155a7-85a1-4595-8fa3-f82c0eecd27a.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/17/1d54f202-1e46-4f0d-ab9c-72746becc845.png" width="300px"> |
+| 到店回收 | 选择门店 | 门店导航 |
+| :------: | :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/19/f515538f-c8f8-45d4-bec2-204f6b1fe3cd.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/17/982155a7-85a1-4595-8fa3-f82c0eecd27a.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/17/1d54f202-1e46-4f0d-ab9c-72746becc845.png" width="300px"> |
 
-| 我的订单 | 门店导航 |
-| :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/19/b6b25083-3cb8-4324-8cc2-e607b50a5870.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/b6b25083-3cb8-4324-8cc2-e607b50a5870.png" width="300px"> |
+| 我的订单 | 订单详情A | 订单详情B |
+| :------: | :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/19/d0a11830-9e15-4bed-b4e5-4f9eb2687cfd.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/0bb40764-0bdf-4043-aa7f-4ee79dc1ef70.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/1a6fed59-0e2f-44af-978b-a71a72132651.png" width="300px"> |
 
 ## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/wechat-app-mall)
