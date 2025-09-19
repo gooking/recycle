@@ -231,14 +231,17 @@
 					title: ''
 				})
 				this.loading = true
+				const extJsonStr = {
+					'预计总量': this.weight,
+					'废品描述': this.description
+				}
 				// 批量上传图片
-				const imagesUrls = []
 				if (this.fileList) {
 					for (let index = 0; index < this.fileList.length; index++) {
 						const pic = this.fileList[index]
 						const res = await this.$wxapi.uploadFileV2(this.token, pic.url)
 						if (res.code == 0) {
-							imagesUrls.push(res.data.url)
+							extJsonStr['image_' + (index + 1)] = res.data.url
 						}
 					}
 				}
@@ -249,11 +252,7 @@
 						number: 1,
 					})
 				})
-				const extJsonStr = {
-					'预计总量': this.weight,
-					'废品描述': this.description,
-					'imagesUrls': imagesUrls
-				}
+				
 				const postData = {
 					token: this.token,
 					recycle: true,
