@@ -1,7 +1,7 @@
 <template>
 	<view class="mine-page">
 		<!-- 用户信息区域 -->
-		<view v-if="userInfo" class="user-info">
+		<view v-if="userInfo" class="user-info" @click="info">
 			<view class="user-avatar">
 				<image class="avatar" :src="userInfo.base.avatarUrl || '/static/images/avatarUrl.png'" mode="aspectFit"></image>
 			</view>
@@ -16,7 +16,7 @@
 
 		<!-- 余额和回收量卡片 -->
 		<view class="balance-cards">
-			<view class="balance-card balance">
+			<view class="balance-card balance" @click="asset">
 				<view class="card-content">
 					<text class="amount">{{ balance }}</text>
 					<text class="label">账户余额 (元)</text>
@@ -28,7 +28,7 @@
 			<view class="balance-card recycle">
 				<view class="card-content">
 					<text class="amount">{{ score }}</text>
-					<text class="label">当前积分</text>
+					<text class="label">可用积分</text>
 					<view class="view-btn">
 						<uni-icons type="right" size="32rpx" color="#FFF"></uni-icons>
 					</view>
@@ -71,7 +71,7 @@
 
 			<view class="menu-divider"></view>
 
-			<view class="menu-item" @click="goToAbout">
+			<view class="menu-item" @click="about">
 				<view class="menu-icon">
 					<image src="/static/images/mine/about.png" mode="aspectFit"></image>
 				</view>
@@ -144,13 +144,25 @@
 					url: '/pages/mine/address'
 				})
 			},
-			goToFeedback() {
-				// 跳转到用户反馈页面
-				console.log('用户反馈')
+			info() {
+				uni.navigateTo({
+					url: '/pages/mine/info'
+				})
 			},
-			goToAbout() {
-				// 跳转到关于我们页面
-				console.log('关于我们')
+			asset() {
+				uni.navigateTo({
+					url: '/pages/mine/asset'
+				})
+			},
+			about() {
+				uni.navigateTo({
+					url: '/pages/mine/about?key=about'
+				})
+			},
+			goToFeedback() {
+				uni.navigateTo({
+					url: '/pages/mine/feedback'
+				})
 			},
 			shareQR() {
 				// 分享二维码功能

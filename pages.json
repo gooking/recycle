@@ -57,6 +57,16 @@
 			}
 		},
 		{
+			"path": "pages/mine/info",
+			"style": {
+				"navigationBarTitleText": "个人信息",
+				"backgroundColor": "#ffffff",
+				"backgroundColorTop": "#ffffff",
+				"backgroundColorBottom": "#ffffff",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
 			"path": "pages/mine/address",
 			"style": {
 				"navigationBarTitleText": "地址管理"
@@ -66,6 +76,33 @@
 			"path": "pages/mine/address-edit",
 			"style": {
 				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/mine/asset",
+			"style": {
+				"navigationBarTitleText": "账户余额",
+				"backgroundColor": "#ffffff",
+				"backgroundColorTop": "#ffffff",
+				"backgroundColorBottom": "#ffffff",
+				"navigationBarBackgroundColor": "#ffffff",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/mine/about",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/mine/feedback",
+			"style": {
+				"navigationBarTitleText": "意见反馈",
+				"backgroundColor": "#ffffff",
+				"backgroundColorTop": "#ffffff",
+				"backgroundColorBottom": "#ffffff",
+				"navigationBarBackgroundColor": "#ffffff"
 			}
 		}
 	],

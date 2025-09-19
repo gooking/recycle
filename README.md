@@ -29,9 +29,13 @@
 
 ## 效果预览
 
-| 下单A | 下单B | 收货地址A | 收货地址B |
-| :------: | :------: | :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/16/8ea2136f-4fcf-46c5-9d9f-a32a8c28da22.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/1fad8815-df5f-4dc3-872f-ea09a0c1d3b1.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/a173fcb3-7f74-4f90-885d-fb53a554656d.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/93e14ecb-7cb5-441e-8b01-5912bc7ae993.png" width="300px"> |
+| 下单A | 下单B | 选择城市 |
+| :------: | :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/16/8ea2136f-4fcf-46c5-9d9f-a32a8c28da22.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/1fad8815-df5f-4dc3-872f-ea09a0c1d3b1.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/a2d411b9-d2ca-4652-823c-f66ebb5c1015.png" width="300px"> |
+
+| 收货地址A | 收货地址B |
+| :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/16/a173fcb3-7f74-4f90-885d-fb53a554656d.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/93e14ecb-7cb5-441e-8b01-5912bc7ae993.png" width="300px"> |
 
 | 到店回收 | 选择门店 | 门店导航 |
 | :------: | :------: | :------: |
@@ -41,9 +45,13 @@
 | :------: | :------: | :------: |
 | <img src="https://dcdn.it120.cc/2025/09/19/d0a11830-9e15-4bed-b4e5-4f9eb2687cfd.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/0bb40764-0bdf-4043-aa7f-4ee79dc1ef70.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/1a6fed59-0e2f-44af-978b-a71a72132651.png" width="300px"> |
 
-| 我的 |
-| :------: |
-| <img src="https://dcdn.it120.cc/2025/09/19/169682a1-a7ea-48d5-b8ee-6a529ae7b303.png" width="300px"> |
+| 我的 | 修改资料 | 意见反馈 |
+| :------: | :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/19/169682a1-a7ea-48d5-b8ee-6a529ae7b303.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/e9f1319d-54c2-424a-b079-31e629dc620b.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/6a7f466e-b3b6-4632-8d35-1ddda3391fe5.png" width="300px"> |
+
+| 关于我们 | 资金明细 |
+| :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/19/0890773d-e8b6-4da4-86f8-1b098db2bbf7.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/b046fe15-1e8d-443d-b025-d8f50d73a7f9.png" width="300px"> |
 
 ## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/wechat-app-mall)
