@@ -90,6 +90,17 @@
 			}
 		},
 		{
+			"path": "pages/mine/score",
+			"style": {
+				"navigationBarTitleText": "积分明细",
+				"backgroundColor": "#ffffff",
+				"backgroundColorTop": "#ffffff",
+				"backgroundColorBottom": "#ffffff",
+				"navigationBarBackgroundColor": "#ffffff",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path": "pages/mine/about",
 			"style": {
 				"navigationBarTitleText": ""

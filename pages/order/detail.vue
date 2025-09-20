@@ -110,8 +110,7 @@
 		methods: {
 			getStatusText(status) {
 				const statusMap = {
-					// '1': '派单中',
-					'0': '进行中',
+					'0': '派单中',
 					'1': '进行中',
 					'2': '进行中',
 					'3': '已完成',

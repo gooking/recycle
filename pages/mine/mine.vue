@@ -25,7 +25,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="balance-card recycle">
+			<view class="balance-card recycle" @click="_score">
 				<view class="card-content">
 					<text class="amount">{{ score }}</text>
 					<text class="label">可用积分</text>
@@ -152,6 +152,11 @@
 			asset() {
 				uni.navigateTo({
 					url: '/pages/mine/asset'
+				})
+			},
+			_score() {
+				uni.navigateTo({
+					url: '/pages/mine/score'
 				})
 			},
 			about() {

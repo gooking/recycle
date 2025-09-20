@@ -26,10 +26,10 @@
 						<view v-if="order.type2 == '到店回收'" class="address-info shop">
 							<view class="l">
 								<view class="name">{{ order.shopNameZt }}</view>
-								<view class="tel">13500000000</view>
+								<view class="tel">{{ order.shopInfo.linkPhone }}</view>
 							</view>
-							<image class="icon" src="/static/images/tel.png" mode="widthFix" @click.stop="callMerchant(order)"></image>
-							<image class="icon" src="/static/images/pos.png" mode="widthFix" @click.stop="callMerchant(order)"></image>
+							<image class="icon" src="/static/images/tel.png" mode="widthFix" @click.stop="makeCall(order.shopInfo.linkPhone)"></image>
+							<image class="icon" src="/static/images/pos.png" mode="widthFix" @click.stop="openLocation(order.shopInfo)"></image>
 						</view>
 						
 						<view class="type">
@@ -89,7 +89,7 @@
 			return {
 				page: 1,
 				tabIndex: 0,
-				tabs: ['全部', '进行中', '已完成', '已取消'], // todo 派单中
+				tabs: ['全部', '派单中', '进行中', '已完成', '已取消'], // todo 派单中
 				list: [],
 				currentTab: 0, // 当前选中的标签页
 			}
@@ -129,8 +129,10 @@
 				if (this.tabIndex == 1) {
 					postData.status = 0
 				} else if (this.tabIndex == 2) {
-					postData.statusBatch = '3,4'
+					postData.status = 1
 				} else if (this.tabIndex == 3) {
+					postData.statusBatch = '3,4'
+				} else if (this.tabIndex == 4) {
 					postData.status = -1
 				}
 				const res = await this.$wxapi.orderList(postData)
@@ -152,6 +154,7 @@
 							order.picNumber = picNumber
 						}
 						order.logistics = res.data.logisticsMap[order.id]
+						order.shopInfo = res.data.shopMap[order.shopIdZt]
 					})
 					if (this.page == 1) {
 						this.list = res.data.orderList
@@ -171,9 +174,8 @@
 			getStatusClass(status) {
 				console.log(status);
 				const statusMap = {
-					// '1': 'status-dispatching', // 派单中
-					'1': 'status-processing', // 派单中
-					'0': 'status-processing', // 进行中
+					'1': 'status-processing', // 进行中
+					'0': 'status-dispatching', // 派单中
 					'2': 'status-processing', // 进行中
 					'3': 'status-completed', // 已完成
 					'4': 'status-completed', // 已完成
@@ -187,8 +189,7 @@
 			 */
 			getStatusText(status) {
 				const statusMap = {
-					// '1': '派单中',
-					'0': '进行中',
+					'0': '派单中',
 					'1': '进行中',
 					'2': '进行中',
 					'3': '已完成',
@@ -201,22 +202,23 @@
 			/**
 			 * 联系商家
 			 */
-			callMerchant(order) {
-				uni.showModal({
-					title: '联系商家',
-					content: '是否拨打商家电话？',
-					success: (res) => {
-						if (res.confirm) {
-							// 这里可以调用拨打电话的API
-							uni.showToast({
-								title: '正在拨打电话...',
-								icon: 'none'
-							})
-						}
-					}
+			makeCall(phoneNumber) {
+				uni.makePhoneCall({
+					phoneNumber
 				})
 			},
-
+			openLocation(shopInfo) {
+				var name = shopInfo.name
+				var address = shopInfo.address
+				var latitude = shopInfo.latitude
+				var longitude = shopInfo.longitude
+				uni.openLocation({
+					name: name,
+					address: address,
+					latitude: latitude,
+					longitude: longitude,
+				})
+			},
 			/**
 			 * 取消订单
 			 */

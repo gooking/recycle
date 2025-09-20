@@ -3,11 +3,8 @@
 		<!-- 顶部余额卡片 -->
 		<view class="balance-card">
 			<view class="balance-content">
-				<text class="balance-label">账户余额(元)</text>
-				<text class="balance-amount">{{ balance }}</text>
-			</view>
-			<view class="withdraw-btn" @click="handleWithdraw">
-				<text class="withdraw-text">立即提现</text>
+				<text class="balance-label">当前积分余额</text>
+				<text class="balance-amount">{{ score }}</text>
 			</view>
 		</view>
 
@@ -20,13 +17,13 @@
 		<!-- 收入统计区域 -->
 		<view class="income-stats">
 			<view class="stat-item">
-				<text class="stat-label">废品收入(元)</text>
-				<text class="stat-amount">{{ totleConsumed }}</text>
+				<text class="stat-label">成长值</text>
+				<text class="stat-amount">{{ growth }}</text>
 			</view>
 			<view class="stat-divider"></view>
 			<view class="stat-item">
-				<text class="stat-label">已提现(元)</text>
-				<text class="stat-amount">{{ totalWithdraw }}</text>
+				<text class="stat-label">累计获得</text>
+				<text class="stat-amount">{{ totalScore }}</text>
 			</view>
 		</view>
 
@@ -41,7 +38,7 @@
 						<text class="record-detail">{{ record.remark }}</text>
 						<text class="record-time">{{ record.dateAdd }}</text>
 					</view>
-					<text class="record-amount income">{{ record.amount }}</text>
+					<text class="record-amount income">{{ record.score }}</text>
 				</view>
 			</view>
 		</view>
@@ -57,21 +54,21 @@
 				noticeLastOne: undefined,
 				list: undefined,
 				page: 1,
-				balance: 0,
+				score: 0,
 				totalRefundAmount: 0,
-				totleConsumed: 0,
-				totalWithdraw: 0,
+				growth: 0,
+				totalScore: 0,
 			}
 		},
 		onLoad() {
-			this.cashLogsV2()
+			this.scoreLogs()
 			this.userAmount()
 			this._noticeLastOne()
 		},
 		onPullDownRefresh() {
 			uni.stopPullDownRefresh()
 			this.page = 1
-			this.cashLogsV2()
+			this.scoreLogs()
 			this.userAmount()
 			this._noticeLastOne()
 		},
@@ -86,7 +83,7 @@
 				uni.showLoading({
 					title: ''
 				})
-				const res = await this.$wxapi.noticeLastOne('tx')
+				const res = await this.$wxapi.noticeLastOne('score')
 				uni.hideLoading()
 				if(res.code == 0) {
 					this.noticeLastOne = res.data
@@ -100,18 +97,18 @@
 				const res = await this.$wxapi.userAmount(this.token)
 				uni.hideLoading()
 				if(res.code == 0) {
-					this.balance = res.data.balance
+					this.score = res.data.score
 					this.totalRefundAmount = res.data.totalRefundAmount
-					this.totleConsumed = res.data.totleConsumed
-					this.totalWithdraw = res.data.totalWithdraw
+					this.growth = res.data.growth
+					this.totalScore = res.data.totalScore
 				}
 			},
-			async cashLogsV2() {
-				// https://www.yuque.com/apifm/nu0f75/khq7xu
+			async scoreLogs() {
+				// https://www.yuque.com/apifm/nu0f75/ezi14x
 				uni.showLoading({
 					title: ''
 				})
-				const res = await this.$wxapi.cashLogsV2({
+				const res = await this.$wxapi.scoreLogs({
 					token: this.token,
 					page: this.page,
 				})
@@ -129,9 +126,9 @@
 				}
 			},
 			detail(item) {
-				if(item.type == 250 && item.orderId2) {
+				if(item.type == 20 && item.orderId) {
 					uni.navigateTo({
-						url: '/pages/order/detail?id=' + item.orderId2
+						url: '/pages/order/detail?id=' + item.orderId
 					})
 				}
 			},
@@ -150,49 +147,32 @@
 	.balance-card {
 		margin: 24rpx 28rpx 0;
 		height: 230rpx;
-		background: linear-gradient(139deg, rgba(255, 137, 60, 1) 0%, rgba(255, 175, 122, 1) 100%);
+		background: linear-gradient(137deg, #30BCB7 0%, #49CCAD 100%);
 		border-radius: 24rpx;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: center;
 		padding: 0 40rpx;
-		position: relative;
 	}
 
 	.balance-content {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 	}
 
 	.balance-label {
-		font-family: PingFang SC;
 		font-size: 24rpx;
 		color: #FFFFFF;
 		margin-bottom: 8rpx;
 	}
 
 	.balance-amount {
-		font-family: MiSans;
+		margin-top: 32rpx;
 		font-weight: 520;
 		font-size: 48rpx;
 		color: #FFFFFF;
 		line-height: 1.3;
-	}
-
-	.withdraw-btn {
-		width: 152rpx;
-		height: 58rpx;
-		background-color: rgba(214, 113, 50, 1.0);
-		border-radius: 30rpx;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.withdraw-text {
-		font-family: PingFang SC;
-		font-size: 26rpx;
-		color: #FFFFFF;
 	}
 
 	/* 免息提现提示 */
@@ -351,7 +331,7 @@
 		line-height: 1.375;
 
 		&.income {
-			color: rgba(255, 137, 60, 1);
+			color: #30B394;
 		}
 
 		&.withdraw {

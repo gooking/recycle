@@ -49,9 +49,9 @@
 | :------: | :------: | :------: |
 | <img src="https://dcdn.it120.cc/2025/09/19/169682a1-a7ea-48d5-b8ee-6a529ae7b303.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/e9f1319d-54c2-424a-b079-31e629dc620b.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/6a7f466e-b3b6-4632-8d35-1ddda3391fe5.png" width="300px"> |
 
-| 关于我们 | 资金明细 |
-| :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/19/0890773d-e8b6-4da4-86f8-1b098db2bbf7.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/b046fe15-1e8d-443d-b025-d8f50d73a7f9.png" width="300px"> |
+| 关于我们 | 资金明细 | 积分明细 | 
+| :------: | :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/19/0890773d-e8b6-4da4-86f8-1b098db2bbf7.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/20/f2dc70c9-86bc-4e7a-a958-15003a565c72.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/20/f285bcaf-d1a7-40a9-bdd6-2cda4c414f47.png" width="300px"> |
 
 ## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/wechat-app-mall)
