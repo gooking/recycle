@@ -115,6 +115,16 @@
 				"backgroundColorBottom": "#ffffff",
 				"navigationBarBackgroundColor": "#ffffff"
 			}
+		},
+		{
+			"path": "pages/mine/withdraw",
+			"style": {
+				"navigationBarTitleText": "申请提现",
+				"backgroundColor": "#F2F7F9",
+				"backgroundColorTop": "#F2F7F9",
+				"backgroundColorBottom": "#F2F7F9",
+				"navigationBarBackgroundColor": "#F2F7F9"
+			}
 		}
 	],
 	"globalStyle": {

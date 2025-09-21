@@ -5,6 +5,7 @@
 		globalData: {
 			curLat: undefined,
 			curLong: undefined,
+			adminLogined: false, // 登陆获取后台的 x-token，只需运行一次
 		},
 		onLaunch: function() {
 			this.vuex('versionNum', uni.getAppBaseInfo().appVersion)
@@ -20,10 +21,12 @@
 					// #ifdef MP-WEIXIN
 					AUTH.authorize().then(res => {
 						this.getUserApiInfo()
+						// this.adminLogin()
 					})
 					// #endif
 				} else {
 					this.getUserApiInfo()
+					// this.adminLogin()
 				}
 			})
 		},
@@ -70,6 +73,7 @@
 			},
 			async getUserApiInfo() {
 				const _this = this.$vm ? this.$vm : this
+				// https://www.yuque.com/apifm/nu0f75/zgf8pu
 				const res = await _this.$wxapi.userDetail(_this.token)
 				if (res.code == 0) {
 					const apiUserInfoMap = res.data
@@ -204,6 +208,25 @@
 					});
 					// #endif
 				});
+			},
+			async adminLogin() {
+				if(this.globalData.adminLogined) {
+					return
+				}
+				const _this = this.$vm ? this.$vm : this
+				/**
+				 * https://www.yuque.com/apifm/nu0f75/nl01pr
+				 * 用当前用户的token登陆后台获取调用后台api接口的 x-token
+				 */
+				const res = await _this.$wxapi.request('https://user.api.it120.cc/login/token', false, 'POST', {
+					token: _this.token
+				})
+				if (res.code == 0) {
+					this.globalData.adminLogined = true
+					const apiUserInfoMap = res.data
+					_this.vuex('xtoken', res.data.token)
+					_this.vuex('shopIds', res.data.shopIds)
+				}
 			},
 		}
 	}

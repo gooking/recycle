@@ -46,7 +46,7 @@
 			</view>
 		</view>
 		
-		<view class="versionNum">ver {{ versionNum }}</view>
+		
 	</view>
 </template>
 
@@ -134,6 +134,11 @@
 						url: '/pages/order/detail?id=' + item.orderId2
 					})
 				}
+			},
+			handleWithdraw() {
+				uni.navigateTo({
+					url: '/pages/mine/withdraw'
+				})
 			},
 		}
 	}
@@ -358,10 +363,5 @@
 			color: #333333;
 		}
 	}
-	.versionNum {
-		font-size: 22rpx;
-		text-align: center;
-		margin-top: 32rpx;
-		color: #999;
-	}
+	
 </style>

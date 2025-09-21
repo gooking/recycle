@@ -95,6 +95,7 @@
 				</view>
 			</view> -->
 		</view>
+		<view class="versionNum">ver {{ versionNum }}</view>
 	</view>
 </template>
 
@@ -377,5 +378,11 @@
 				margin: 0 12rpx;
 			}
 		}
+	}
+	.versionNum {
+		font-size: 22rpx;
+		text-align: center;
+		margin-top: 32rpx;
+		color: #999;
 	}
 </style>
