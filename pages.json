@@ -125,6 +125,12 @@
 				"backgroundColorBottom": "#F2F7F9",
 				"navigationBarBackgroundColor": "#F2F7F9"
 			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登陆"
+			}
 		}
 	],
 	"globalStyle": {

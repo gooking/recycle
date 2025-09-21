@@ -2,9 +2,13 @@
 
 动动手指，帮忙点下 Star ，让更多人了解我们~
 
-此项目正处于开发阶段，有兴趣一起参与开发的、想贡献代码的，欢迎提交PR！
+有兴趣一起参与开发的、想贡献代码的，欢迎提交PR！
 
 欢迎大家加入微信交流群，一起参与项目的开发和维护、探讨使用过程中遇到的问题！
+
+本项目可以打包成H5、小程序（维信、支付宝、小红书、抖音等等）、app端（Android、IOS）
+
+如果希望增加什么功能，可以提交 ISSUES ，我们会尽快处理。
 
 ## 交流群
 
@@ -53,9 +57,9 @@
 | :------: | :------: | :------: |
 | <img src="https://dcdn.it120.cc/2025/09/19/0890773d-e8b6-4da4-86f8-1b098db2bbf7.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/20/f2dc70c9-86bc-4e7a-a958-15003a565c72.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/20/f285bcaf-d1a7-40a9-bdd6-2cda4c414f47.png" width="300px"> |
 
-| 申请提现 |
-| :------: |
-| <img src="https://dcdn.it120.cc/2025/09/21/891f089f-a506-4eb1-b120-6ed7ce14a93c.png" width="300px"> |
+| 申请提现 | H5登录页 | 
+| :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/21/891f089f-a506-4eb1-b120-6ed7ce14a93c.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/21/2f1ac1b8-90d6-4cf6-89b9-fe0c2b4fb9e6.png" width="300px"> |
 
 ## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/wechat-app-mall)

@@ -8,6 +8,18 @@
 			adminLogined: false, // 登陆获取后台的 x-token，只需运行一次
 		},
 		onLaunch: function() {
+			uni.addInterceptor('request', {
+			  success: (res) => {
+			    if(res.data.code == 2000) {
+					// 未登录
+					// #ifdef H5
+					uni.redirectTo({
+						url: '/pages/login/login'
+					})
+					// #endif
+				}
+			  },
+			})
 			this.vuex('versionNum', uni.getAppBaseInfo().appVersion)
 			this.checkForUpdate(); // 检查新版本
 			this.queryConfigBatch();
@@ -106,7 +118,7 @@
 						title: ''
 					})
 					// #ifdef MP-WEIXIN
-					wx.getLocation({
+					uni.getLocation({
 						type: "gcj02", // 默认为 wgs84 返回 gps 坐标，gcj02 返回国测局坐标，可用于 uni.openLocation 和 map 组件坐标，App 和 H5 需配置定位 SDK 信息才可支持 gcj02。
 						success: res => {
 							resolve({
@@ -233,5 +245,7 @@
 </script>
 
 <style>
-	/*每个页面公共css */
+	/* #ifdef H5 */  
+	uni-page-head { display: none}  
+	/* #endif */
 </style>

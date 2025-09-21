@@ -1,6 +1,9 @@
 <template>
 	<view class="page">
 		<view class="search-box">
+			<!-- #ifdef H5 -->
+			<view style="height: 64rpx;"></view>
+			<!-- #endif -->
 			<!-- 使用自定义头部组件 -->
 			<custom-header></custom-header>
 			<view class="search-container">
@@ -318,6 +321,9 @@
 
 		.search-container {
 			margin-top: 88rpx;
+			/* #ifdef H5 */
+			margin-top: 32rpx;
+			/* #endif */
 			background: #fff;
 			border-radius: 16rpx;
 			padding: 32rpx;

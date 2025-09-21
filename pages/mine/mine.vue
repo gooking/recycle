@@ -95,6 +95,11 @@
 				</view>
 			</view> -->
 		</view>
+		<!-- #ifdef H5 -->
+		<view class="login-out">
+			<button type="default" @click="loginOut">退出登陆</button>
+		</view>
+		<!-- #endif -->
 		<view class="versionNum">ver {{ versionNum }}</view>
 	</view>
 </template>
@@ -173,7 +178,21 @@
 			shareQR() {
 				// 分享二维码功能
 				console.log('分享二维码')
-			}
+			},
+			async loginOut() {
+				// https://www.yuque.com/apifm/nu0f75/mg77aq
+				uni.showLoading({
+					title: ''
+				})
+				await this.$wxapi.loginout(this.token)
+				uni.hideLoading()
+				this.vuex('token', null)
+				this.vuex('uid', null)
+				this.vuex('mobile', null)
+				uni.reLaunch({
+					url: '/pages/index/index'
+				})
+			},
 		}
 	}
 </script>
@@ -377,6 +396,13 @@
 				background: #F6F6F6;
 				margin: 0 12rpx;
 			}
+		}
+	}
+	.login-out {
+		padding: 32rpx;
+		button {
+			background-color: #48C5A8;
+			color: #fff;
 		}
 	}
 	.versionNum {

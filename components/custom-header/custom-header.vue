@@ -15,10 +15,14 @@
 		</view>
 		<!-- 微信小程序胶囊按钮占位区域 -->
 		<view class="capsule-placeholder" :style="{width: menuButtonWidth + 'px'}"></view>
+		<!-- #ifdef H5 -->
+		<view class="header-left-h5">{{ today }}</view>
+		<!-- #endif -->
 	</view>
 </template>
 
 <script>
+	import dayjs from 'dayjs'
 	export default {
 		name: 'customHeaderV1',
 		// 组件属性
@@ -38,6 +42,7 @@
 				// 头部内容区域定位
 				headerContentTop: 0,
 				menuButtonWidth: 0, // 胶囊按钮的宽度，需要考虑右侧的间距
+				today: dayjs().format('MM月DD日')
 			}
 		},
 		// 生命周期钩子
@@ -105,7 +110,7 @@
 
 <style lang="scss" scoped>
 	.custom-header {
-		width: 100vw;
+		width: 100%;
 		display: flex;
 	}
 
@@ -136,5 +141,11 @@
 			font-size: 34rpx;
 			color: #FFFFFF;
 		}
+	}
+	.header-left-h5 {
+		font-size: 28rpx;
+		line-height: 40rpx;
+		color: #FFFFFF;
+		padding-right: 8rpx;
 	}
 </style>
