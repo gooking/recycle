@@ -218,6 +218,16 @@ async function authorize() {
 								value: res.data.mobile
 							})
 							resolve(res)
+						} else if(res.code == 500 || res.msg.indexOf('can not get openid') != -1) {
+							uni.showModal({
+								content: '配置AppId有误，无法自动登录，将为您跳转到手机号登陆',
+								showCancel: false,
+								success: () => {
+									uni.redirectTo({
+										url: '/pages/login/login'
+									})
+								}
+							})
 						} else {
 							wx.showToast({
 								title: res.msg,
