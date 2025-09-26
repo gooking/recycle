@@ -207,7 +207,8 @@ export default {
 			const loginResult = await this.$wxapi.loginMobileSmsCode({
 				mobile: this.formData.mobile,
 				code: this.formData.smsCode,
-				autoReg: true // 自动注册
+				autoReg: true, // 自动注册
+				referrer: this.referrer || '', // 邀请人
 			});
 			
 			uni.hideLoading();

@@ -12,7 +12,9 @@
 
 ## 交流群
 
-<img src="https://s3.apifm.com/pub/2025/09/16/2d881595-6786-495e-9053-208a7d81674b.png" width="200px">
+| 微信群 | 微信好友 |
+| :------: | :------: |
+| <img src="https://s3.apifm.com/pub/2025/09/16/2d881595-6786-495e-9053-208a7d81674b.png" width="200px"> | <img src="https://dcdn.it120.cc/2021/09/13/61a80363-9085-4a10-9447-e276a3d40ab3.jpeg" width="200px"> |
 
 ## 快速运行
 
@@ -55,11 +57,11 @@
 
 | 关于我们 | 资金明细 | 积分明细 | 
 | :------: | :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/19/0890773d-e8b6-4da4-86f8-1b098db2bbf7.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/20/f2dc70c9-86bc-4e7a-a958-15003a565c72.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/20/f285bcaf-d1a7-40a9-bdd6-2cda4c414f47.png" width="300px"> |
+| <img src="https://dcdn.it120.cc/2025/09/19/0890773d-e8b6-4da4-86f8-1b098db2bbf7.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/20/f2dc70c9-86bc-4e7a-a958-15003a565c72.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/26/36f9972c-1105-4296-84d4-4dfc9b4a946e.png" width="300px"> |
 
-| 申请提现 | H5登录页 | 
-| :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/21/891f089f-a506-4eb1-b120-6ed7ce14a93c.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/21/2f1ac1b8-90d6-4cf6-89b9-fe0c2b4fb9e6.png" width="300px"> |
+| 申请提现 | H5登录页 | 签到功能 | 
+| :------: | :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/21/891f089f-a506-4eb1-b120-6ed7ce14a93c.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/21/2f1ac1b8-90d6-4cf6-89b9-fe0c2b4fb9e6.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/26/5702dc03-9862-4b83-bbc5-c797f6acc37a.png" width="300px"> |
 
 ## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/wechat-app-mall)

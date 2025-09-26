@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>废品回收 - 分享图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .share-card {
+            width: 800px;
+            height: 800px;
+            background: linear-gradient(135deg, #3ED09F 0%, #48C5A8 50%, #2EA88B 100%);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(62, 208, 159, 0.3);
+        }
+        
+        /* 背景装饰图案 */
+        .bg-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 2px, transparent 2px),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.3) 2px, transparent 2px),
+                radial-gradient(circle at 40% 60%, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 60px 60px, 80px 80px, 40px 40px;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 2;
+            padding: 60px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+        }
+        
+        .header {
+            margin-bottom: 40px;
+        }
+        
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 24px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .recycle-icon {
+            font-size: 60px;
+            color: #3ED09F;
+            font-weight: bold;
+        }
+        
+        .app-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .app-subtitle {
+            font-size: 24px;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+        }
+        
+        .features {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-item {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 30px 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .feature-desc {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.4;
+        }
+        
+        .highlight-text {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin: 30px 0;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .footer {
+            text-align: center;
+        }
+        
+        .qr-placeholder {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 12px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        
+        .scan-text {
+            font-size: 16px;
+            color: white;
+            font-weight: 500;
+        }
+        
+        /* 绿色环保元素 */
+        .eco-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        .leaf {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255,255,255,0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .leaf:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .leaf:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        
+        .leaf:nth-child(3) {
+            bottom: 15%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+        
+        .leaf:nth-child(4) {
+            bottom: 25%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        @media (max-width: 900px) {
+            .share-card {
+                width: 90vmin;
+                height: 90vmin;
+            }
+            
+            .content {
+                padding: 40px;
+            }
+            
+            .app-title {
+                font-size: 36px;
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="share-card">
+        <div class="bg-pattern"></div>
+        
+        <!-- 环保装饰元素 -->
+        <div class="eco-elements">
+            <div class="leaf">🍃</div>
+            <div class="leaf">🌿</div>
+            <div class="leaf">🍃</div>
+            <div class="leaf">🌱</div>
+        </div>
+        
+        <div class="content">
+            <div class="header">
+                <div class="app-icon">
+                    <div class="recycle-icon">回</div>
+                </div>
+                <h1 class="app-title">废品回收</h1>
+                <p class="app-subtitle">让闲置物品重获新生</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-title">预约上门</div>
+                        <div class="feature-desc">一键下单<br>师傅上门回收</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🏪</div>
+                        <div class="feature-title">到店回收</div>
+                        <div class="feature-desc">就近选择<br>门店自助回收</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-title">现金收益</div>
+                        <div class="feature-desc">废品变现金<br>环保又赚钱</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌍</div>
+                        <div class="feature-title">绿色环保</div>
+                        <div class="feature-desc">减少浪费<br>保护地球</div>
+                    </div>
+                </div>
+                
+                <div class="highlight-text">
+                    ♻️ 变废为宝，绿色生活 ♻️
+                </div>
+            </div>
+            
+            <div class="footer">
+                <div class="qr-placeholder">
+                    <span>二维码</span>
+                </div>
+                <p class="scan-text">扫码体验废品回收小程序</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

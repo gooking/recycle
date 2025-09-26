@@ -127,6 +127,15 @@
 			}
 		},
 		{
+			"path": "pages/mine/sign",
+			"style": {
+				"navigationBarTitleText": "签到赚积分",
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登陆"
