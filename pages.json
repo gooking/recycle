@@ -150,6 +150,16 @@
 				"backgroundColorBottom": "#f3f8fa",
 				"navigationBarBackgroundColor": "#f3f8fa"
 			}
+		},
+		{
+			"path": "pages/shop/index",
+			"style": {
+				"navigationBarTitleText": "积分商城",
+				"backgroundColor": "#f3f8fa",
+				"backgroundColorTop": "#f3f8fa",
+				"backgroundColorBottom": "#f3f8fa",
+				"navigationBarBackgroundColor": "#f3f8fa"
+			}
 		}
 	],
 	"globalStyle": {
@@ -174,6 +184,12 @@
 				"text": "订单",
 				"iconPath": "static/images/nav/order-off.png",
 				"selectedIconPath": "static/images/nav/order-on.png"
+			},
+			{
+				"pagePath": "pages/shop/index",
+				"text": "商城",
+				"iconPath": "static/images/nav/shop-off.png",
+				"selectedIconPath": "static/images/nav/shop-on.png"
 			},
 			{
 				"pagePath": "pages/mine/mine",

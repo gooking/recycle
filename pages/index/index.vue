@@ -150,7 +150,8 @@
 			// 获取废品商品列表 https://www.yuque.com/apifm/nu0f75/wg5t98
 			async goodsv2() {
 				const res = await this.$wxapi.goodsv2({
-					token: this.token
+					token: this.token,
+					categoryKey: 'recycle',
 				})
 				if(res.code == 0) {
 					this.recycleTypes = res.data.result
