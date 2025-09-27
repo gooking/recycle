@@ -114,6 +114,15 @@
 			},
 			getLocation: () => {
 				return new Promise(function(resolve, reject) {
+					// #ifdef H5
+					if(CONFIG.h5MapSimulator) {
+						resolve({
+							long: 0,
+							lat: 0
+						})
+						return
+					}
+					// #endif
 					uni.showLoading({
 						title: ''
 					})

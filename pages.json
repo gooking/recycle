@@ -90,17 +90,6 @@
 			}
 		},
 		{
-			"path": "pages/mine/score",
-			"style": {
-				"navigationBarTitleText": "积分明细",
-				"backgroundColor": "#ffffff",
-				"backgroundColorTop": "#ffffff",
-				"backgroundColorBottom": "#ffffff",
-				"navigationBarBackgroundColor": "#ffffff",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
 			"path": "pages/mine/about",
 			"style": {
 				"navigationBarTitleText": ""
@@ -127,7 +116,24 @@
 			}
 		},
 		{
-			"path": "pages/mine/sign",
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登陆"
+			}
+		},
+		{
+			"path": "pages/score/index",
+			"style": {
+				"navigationBarTitleText": "积分明细",
+				"backgroundColor": "#ffffff",
+				"backgroundColorTop": "#ffffff",
+				"backgroundColorBottom": "#ffffff",
+				"navigationBarBackgroundColor": "#ffffff",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/score/sign",
 			"style": {
 				"navigationBarTitleText": "签到赚积分",
 				"enablePullDownRefresh": true,
@@ -136,9 +142,9 @@
 			}
 		},
 		{
-			"path": "pages/login/login",
+			"path": "pages/score/exchange",
 			"style": {
-				"navigationBarTitleText": "登陆"
+				"navigationBarTitleText": "兑换积分"
 			}
 		}
 	],

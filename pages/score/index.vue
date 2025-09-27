@@ -49,15 +49,22 @@
 					<button class="btn" open-type="share"></button>
 					<!-- #endif -->
 				</view>
-				
-				<!-- 每日签到 - 固定显示 -->
-				<view class="points-item" @click="navigateTo('/pages/mine/sign')">
+				<view class="points-item" @click="navigateTo('/pages/score/sign')">
 					<view class="item-icon signin-icon">
 						<image src="/static/images/mine/signin.svg" mode="aspectFit"></image>
 					</view>
 					<view class="item-content">
 						<text class="item-title">每日签到</text>
 						<text class="item-desc">连续签到可获得更多积分</text>
+					</view>
+				</view>
+				<view class="points-item" @click="navigateTo('/pages/score/exchange')">
+					<view class="item-icon invite-icon">
+						<uni-icons type="gift" size="32rpx" color="#fff"></uni-icons>
+					</view>
+					<view class="item-content">
+						<text class="item-title">兑换积分</text>
+						<text class="item-desc">使用积分券领取积分</text>
 					</view>
 				</view>
 			</view>

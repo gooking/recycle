@@ -19,7 +19,7 @@
 				<text class="form-label">回收地址</text>
 				<view class="address-select">
 					<input class="form-input" type="text" v-model="formData.address" placeholder="请选择回收地址" />
-					<uni-icons type="location-filled" size="48rpx" @click="chooseLocation"></uni-icons>
+					<uni-icons v-if="!mapSimulator" type="location-filled" size="48rpx" @click="chooseLocation"></uni-icons>
 				</view>
 			</view>
 
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+	import CONFIG from '@/config.js'
 	export default {
 		data() {
 			return {
@@ -73,10 +74,14 @@
 					isDefault: false,
 					latitude: '',
 					longitude: ''
-				}
+				},
+				mapSimulator: false,
 			}
 		},
 		onLoad(options) {
+			// #ifdef H5
+			this.mapSimulator = CONFIG.h5MapSimulator
+			// #endif
 			// 判断是新增还是编辑
 			if (options && options.id) {
 				uni.setNavigationBarTitle({
@@ -161,6 +166,10 @@
 			 * 保存地址
 			 */
 			async submit() {
+				if(this.mapSimulator) {
+					this.formData.latitude = 1
+					this.formData.longitude = 1
+				}
 				// 表单验证
 				if (!this.formData.name) {
 					return uni.showToast({

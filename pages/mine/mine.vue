@@ -162,7 +162,7 @@
 			},
 			_score() {
 				uni.navigateTo({
-					url: '/pages/mine/score'
+					url: '/pages/score/index'
 				})
 			},
 			about() {

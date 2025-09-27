@@ -99,8 +99,7 @@
 </template>
 
 <script>
-	import WXAPI from 'apifm-uniapp'
-	
+	import dayjs from 'dayjs'
 	export default {
 		data() {
 			return {
@@ -224,13 +223,17 @@
 				uni.hideLoading()
 				if (res.code == 0) {
 					const records = res.data.result.map(item => ({
-						dateStr: this.formatDate(new Date(item.dateAdd)),
+						dateStr: dayjs(item.dateAdd).format('YYYY-MM-DD'),
 						score: item.score,
 						date: new Date(item.dateAdd),
 						continuous: item.continuous,
 					}))
 					if (this.page == 1) {
 						this.signRecords = records
+						// 设置已连续签到多少天
+						if(records[0].dateStr == dayjs().subtract(1, 'day').format('YYYY-MM-DD')) {
+							this.continuousDays = records[0].continuous
+						}
 						this.updateWeekDaysStatus()
 					} else {
 						this.signRecords.push(...records)
@@ -254,14 +257,6 @@
 					console.log('振动失败:', error)
 				}
 			},
-			
-			// 格式化日期
-			formatDate(date) {
-				const year = date.getFullYear()
-				const month = String(date.getMonth() + 1).padStart(2, '0')
-				const day = String(date.getDate()).padStart(2, '0')
-				return `${year}-${month}-${day}`
-			}
 		}
 	}
 </script>
