@@ -2,7 +2,7 @@
 	<view class="exchange-page">
 		<!-- 自定义导航栏 -->
 		<!-- #ifdef H5 -->
-		<view class="custom-navbar">
+		<!-- <view class="custom-navbar">
 			<view class="navbar-content">
 				<view class="navbar-left" @click="goBack">
 					<uni-icons type="back" size="40rpx" color="#333"></uni-icons>
@@ -12,7 +12,7 @@
 				</view>
 				<view class="navbar-right"></view>
 			</view>
-		</view>
+		</view> -->
 		<!-- #endif -->
 		
 		<!-- 头部装饰区域 -->
