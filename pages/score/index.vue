@@ -106,10 +106,12 @@
 			}
 		},
 		onLoad() {
-			this.scoreLogs()
-			this.userAmount()
 			this._noticeLastOne()
 			this._scoreRules()
+		},
+		onShow() {
+			this.scoreLogs()
+			this.userAmount()
 		},
 		onPullDownRefresh() {
 			uni.stopPullDownRefresh()

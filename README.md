@@ -43,13 +43,17 @@
 
 ## 效果预览
 
-| 下单A | 下单B | 选择城市 |
+| H5登录页 |
+| :------: |
+| <img src="https://dcdn.it120.cc/2025/09/21/2f1ac1b8-90d6-4cf6-89b9-fe0c2b4fb9e6.png" width="300px"> |
+
+| 上门回收 | 上门回收 | 选择城市 |
 | :------: | :------: | :------: |
 | <img src="https://dcdn.it120.cc/2025/09/16/8ea2136f-4fcf-46c5-9d9f-a32a8c28da22.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/1fad8815-df5f-4dc3-872f-ea09a0c1d3b1.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/a2d411b9-d2ca-4652-823c-f66ebb5c1015.png" width="300px"> |
 
-| 收货地址A | 收货地址B |
-| :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/16/a173fcb3-7f74-4f90-885d-fb53a554656d.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/93e14ecb-7cb5-441e-8b01-5912bc7ae993.png" width="300px"> |
+| 收货地址A | 收货地址B | 地图选择 |
+| :------: | :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/16/a173fcb3-7f74-4f90-885d-fb53a554656d.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/16/93e14ecb-7cb5-441e-8b01-5912bc7ae993.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/27/356db48e-2d6e-4c55-bbc8-3c820c685cb9.png" width="300px"> |
 
 | 到店回收 | 选择门店 | 门店导航 |
 | :------: | :------: | :------: |
@@ -63,13 +67,13 @@
 | :------: | :------: | :------: |
 | <img src="https://dcdn.it120.cc/2025/09/19/169682a1-a7ea-48d5-b8ee-6a529ae7b303.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/e9f1319d-54c2-424a-b079-31e629dc620b.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/6a7f466e-b3b6-4632-8d35-1ddda3391fe5.png" width="300px"> |
 
-| 关于我们 | 资金明细 | 积分明细 | 
+| 关于我们 | 账户余额 | 申请提现 |
 | :------: | :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/19/0890773d-e8b6-4da4-86f8-1b098db2bbf7.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/20/f2dc70c9-86bc-4e7a-a958-15003a565c72.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/26/36f9972c-1105-4296-84d4-4dfc9b4a946e.png" width="300px"> |
+| <img src="https://dcdn.it120.cc/2025/09/19/0890773d-e8b6-4da4-86f8-1b098db2bbf7.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/20/f2dc70c9-86bc-4e7a-a958-15003a565c72.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/21/891f089f-a506-4eb1-b120-6ed7ce14a93c.png" width="300px"> |
 
-| 申请提现 | H5登录页 | 签到功能 | 
+| 积分中心 | 签到功能 | 积分券兑换 | 
 | :------: | :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/21/891f089f-a506-4eb1-b120-6ed7ce14a93c.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/21/2f1ac1b8-90d6-4cf6-89b9-fe0c2b4fb9e6.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/26/5702dc03-9862-4b83-bbc5-c797f6acc37a.png" width="300px"> |
+| <img src="https://dcdn.it120.cc/2025/09/27/9c1d4bb6-3b01-4d24-8355-c3530b3acd4b.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/26/5702dc03-9862-4b83-bbc5-c797f6acc37a.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/27/1978c423-907a-46d7-9212-3b4531e49fb1.png" width="300px"> |
 
 ## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/wechat-app-mall)

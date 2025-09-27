@@ -124,7 +124,7 @@
 		{
 			"path": "pages/score/index",
 			"style": {
-				"navigationBarTitleText": "积分明细",
+				"navigationBarTitleText": "积分中心",
 				"backgroundColor": "#ffffff",
 				"backgroundColorTop": "#ffffff",
 				"backgroundColorBottom": "#ffffff",
@@ -144,7 +144,11 @@
 		{
 			"path": "pages/score/exchange",
 			"style": {
-				"navigationBarTitleText": "兑换积分"
+				"navigationBarTitleText": "兑换积分",
+				"backgroundColor": "#f3f8fa",
+				"backgroundColorTop": "#f3f8fa",
+				"backgroundColorBottom": "#f3f8fa",
+				"navigationBarBackgroundColor": "#f3f8fa"
 			}
 		}
 	],
