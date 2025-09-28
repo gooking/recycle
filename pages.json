@@ -160,6 +160,16 @@
 				"backgroundColorBottom": "#f3f8fa",
 				"navigationBarBackgroundColor": "#f3f8fa"
 			}
+		},
+		{
+			"path": "pages/shop/goods-list",
+			"style": {
+				"navigationBarTitleText": "",
+				"backgroundColor": "#f3f8fa",
+				"backgroundColorTop": "#f3f8fa",
+				"backgroundColorBottom": "#f3f8fa",
+				"navigationBarBackgroundColor": "#f3f8fa"
+			}
 		}
 	],
 	"globalStyle": {

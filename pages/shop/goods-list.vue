@@ -32,61 +32,9 @@
 		
 		<!-- 主要内容区域 -->
 		<view class="content-section">
-			<!-- Banner轮播图 -->
-			<view class="banner-section">
-				<swiper 
-					class="banner-swiper" 
-					:indicator-dots="true" 
-					:autoplay="true" 
-					:interval="3000" 
-					:duration="500"
-					circular
-					indicator-color="rgba(255,255,255,0.5)"
-					indicator-active-color="#30BCB7"
-				>
-					<swiper-item v-for="(banner, index) in bannerList" :key="index" @click="handleBannerClick(banner)">
-						<view class="banner-item">
-							<image :src="banner.picUrl" class="banner-image" mode="aspectFill"></image>
-						</view>
-					</swiper-item>
-				</swiper>
-			</view>
-			
-			<!-- 商品分类金刚区 -->
-			<view class="category-section">
-				<view class="section-title">
-					<view class="title-left">
-						<text class="title-text">商品分类</text>
-						<view class="title-decoration"></view>
-					</view>
-				</view>
-				<view class="category-grid">
-					<view 
-						v-for="(category, index) in categoryList" 
-						:key="category.id" 
-						class="category-item"
-						@click="handleCategoryClick(category)"
-					>
-						<view class="category-icon">
-							<image :src="category.icon" class="icon-image" mode="aspectFit"></image>
-						</view>
-						<text class="category-name">{{ category.name }}</text>
-					</view>
-				</view>
-			</view>
 			
 			<!-- 商品列表 -->
 			<view class="product-section">
-				<view class="section-title">
-					<view class="title-left">
-						<text class="title-text">积分好物</text>
-						<view class="title-decoration"></view>
-					</view>
-					<view class="title-right" @click="handleViewMore">
-						<text class="more-text">查看更多</text>
-						<uni-icons type="right" size="24rpx" color="#999"></uni-icons>
-					</view>
-				</view>
 				<page-box-empty v-if="!productList || productList.length == 0" title="暂无商品" subTitle="积分商品正在上架中~"></page-box-empty>
 				<view class="product-grid">
 					<view 
@@ -131,16 +79,9 @@
 	export default {
 		data() {
 			return {
-				scoreShop: undefined,
 				// 搜索相关
 				searchKeyword: '', // 搜索关键词
-				
-				// 轮播图数据
-				bannerList: [],
-				
-				// 分类数据
-				categoryList: [],
-				
+				categoryId: '', // 分类ID
 				// 商品数据
 				productList: [],
 				
@@ -149,9 +90,27 @@
 			}
 		},
 		
-		onLoad(options) {
-			this.loadBannerList()
-			this.loadCategoryList()
+		onLoad(e) {
+			if (e.searchKeyword) {
+				uni.setNavigationBarTitle({
+					title: '搜索结果'
+				})
+			} else if (e.categoryId) {
+				uni.setNavigationBarTitle({
+					title: e.categoryName
+				})
+			} else {
+				uni.setNavigationBarTitle({
+					title: '更多商品'
+				})
+			}
+			this.searchKeyword = e.searchKeyword || ''
+			this.categoryId = e.categoryId || ''
+			if (this.categoryId) {
+				this.loadProductList()
+			} else {
+				this.loadCategoryList()
+			}
 		},
 		
 		onShow() {
@@ -167,29 +126,16 @@
 		methods: {
 			
 			/**
-			 * 加载Banner列表
-			 * https://www.yuque.com/apifm/nu0f75/ms21ki
-			 */
-			async loadBannerList() {
-				const res = await this.$wxapi.banners({
-					type: 'shop' // 商城banner
-				})
-				if (res.code == 0) {
-					this.bannerList = res.data
-				}
-			},
-			
-			/**
 			 * 加载商品分类列表
 			 * https://www.yuque.com/apifm/nu0f75/racmle
 			 */
 			async loadCategoryList() {
 				const res = await this.$wxapi.goodsCategoryV2()
 				if (res.code === 0) {
-					this.scoreShop = res.data.find(ele => ele.key == 'scoreShop')
-					this.loadProductList()
-					if(this.scoreShop) {
-						this.categoryList = res.data.filter(ele => ele.pid == this.scoreShop.id)
+					const scoreShop = res.data.find(ele => ele.key == 'scoreShop')
+					if(scoreShop) {
+						this.categoryId = scoreShop.id
+						this.loadProductList()
 					}
 				}
 			},
@@ -199,14 +145,14 @@
 			 * https://www.yuque.com/apifm/nu0f75/wg5t98
 			 */
 			async loadProductList() {
-				if(!this.scoreShop) {
+				if(!this.categoryId) {
 					return
 				}
 				const params = {
 					page: this.page,
 					token: this.token,
 					k: this.searchKeyword || '',
-					categoryId: this.scoreShop.id,
+					categoryId: this.categoryId,
 				}
 				uni.showLoading({
 					title: ''
@@ -247,22 +193,6 @@
 			clearSearch() {
 				this.searchKeyword = ''
 				this.loadProductList()
-			},
-			
-			/**
-			 * Banner点击处理
-			 */
-			handleBannerClick(banner) {
-				// todo
-			},
-			
-			/**
-			 * 分类点击处理
-			 */
-			handleCategoryClick(category) {
-				uni.navigateTo({
-					url: '/pages/shop/goods-list?categoryId='+ category.id +'&categoryName=' + category.name
-				})
 			},
 			
 			/**
@@ -308,15 +238,6 @@
 					})
 				}
 			},
-			
-			/**
-			 * 查看更多商品
-			 */
-			handleViewMore() {
-				uni.navigateTo({
-					url: '/pages/shop/goods-list'
-				})
-			}
 		}
 	}
 </script>
