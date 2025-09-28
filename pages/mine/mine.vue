@@ -45,6 +45,38 @@
 			</view> -->
 		</view>
 
+		<!-- 积分商城订单入口 -->
+		<view class="points-order-section">
+			<view class="section-title">商城订单</view>
+			<view class="order-grid">
+				<view class="order-item" @click="goToPointsOrders(1)">
+					<view class="order-icon">
+						<!-- https://www.iconfont.cn/collections/detail?spm=a313x.search_index.0.da5a778a4.6c633a81SiPdEk&cid=28 -->
+						<image src="/static/images/order/dfh.png" mode="aspectFit"></image>
+					</view>
+					<text class="order-text">待发货</text>
+				</view>
+				<view class="order-item" @click="goToPointsOrders(2)">
+					<view class="order-icon">
+						<image src="/static/images/order/yfh.png" mode="aspectFit"></image>
+					</view>
+					<text class="order-text">已收货</text>
+				</view>
+				<view class="order-item" @click="goToPointsOrders(-2)">
+					<view class="order-icon">
+						<image src="/static/images/order/success.png" mode="aspectFit"></image>
+					</view>
+					<text class="order-text">已完成</text>
+				</view>
+				<view class="order-item" @click="goToPointsOrders(-3)">
+					<view class="order-icon">
+						<image src="/static/images/order/all.png" mode="aspectFit"></image>
+					</view>
+					<text class="order-text">全部</text>
+				</view>
+			</view>
+		</view>
+
 		<!-- 功能菜单 -->
 		<view class="menu-section">
 			<view class="menu-item" @click="goToAddress">
@@ -188,6 +220,11 @@
 			goToFeedback() {
 				uni.navigateTo({
 					url: '/pages/mine/feedback'
+				})
+			},
+			goToPointsOrders(status) {
+				uni.navigateTo({
+					url: `/pages/shop/order-list?mod=${status}`
 				})
 			},
 			shareQR() {
@@ -348,6 +385,63 @@
 			}
 		}
 
+		.points-order-section {
+			background: #FFFFFF;
+			border-radius: 24rpx;
+			margin: 32rpx 28rpx 0;
+			padding: 32rpx;
+
+			.section-title {
+				font-family: PingFang SC;
+				font-weight: 600;
+				font-size: 32rpx;
+				line-height: 44rpx;
+				color: #333333;
+				margin-bottom: 32rpx;
+			}
+
+			.order-grid {
+				display: flex;
+				justify-content: space-between;
+
+				.order-item {
+					flex: 1;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					padding: 0 16rpx;
+
+					.order-icon {
+						width: 64rpx;
+						height: 64rpx;
+						margin-bottom: 16rpx;
+						background: #F8F9FA;
+						border-radius: 50%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+
+						image {
+							width: 40rpx;
+							height: 40rpx;
+						}
+					}
+
+					.order-text {
+						font-family: PingFang SC;
+						font-weight: 400;
+						font-size: 24rpx;
+						line-height: 34rpx;
+						color: #666666;
+						text-align: center;
+					}
+
+					&:active {
+						opacity: 0.7;
+					}
+				}
+			}
+		}
 
 		.menu-section {
 			background: #FFFFFF;

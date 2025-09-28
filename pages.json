@@ -196,6 +196,26 @@
 				"backgroundColorBottom": "#f3f8f9",
 				"navigationBarBackgroundColor": "#f3f8f9"
 			}
+		},
+		{
+			"path": "pages/shop/order-list",
+			"style": {
+				"navigationBarTitleText": "商城订单",
+				"backgroundColor": "#f3f8f9",
+				"backgroundColorTop": "#f3f8f9",
+				"backgroundColorBottom": "#f3f8f9",
+				"navigationBarBackgroundColor": "#f3f8f9"
+			}
+		},
+		{
+			"path": "pages/shop/order-detail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"backgroundColor": "#f3f8f9",
+				"backgroundColorTop": "#f3f8f9",
+				"backgroundColorBottom": "#f3f8f9",
+				"navigationBarBackgroundColor": "#f3f8f9"
+			}
 		}
 	],
 	"globalStyle": {

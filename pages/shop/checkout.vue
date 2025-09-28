@@ -295,17 +295,17 @@
 								orderId: res.data.id
 							})
 							if (resPay.code == 0) {
-								// uni.redirectTo({
-								//     url: `/pages/order/detail?id=${res.data.id}`
-								// })
+								uni.redirectTo({
+								    url: `/pages/shop/order-detail?id=${res.data.id}`
+								})
 							} else {
 								uni.showModal({
 									content: resPay.msg,
 									showCancel: false,
 									success: () => {
-										// uni.redirectTo({
-										//     url: `/pages/order/detail?id=${res.data.id}`
-										// })
+										uni.redirectTo({
+										    url: `/pages/shop/order-detail?id=${res.data.id}`
+										})
 									}
 								})
 							}
