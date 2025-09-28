@@ -237,9 +237,8 @@
 			 * 去结算
 			 */
 			handleCheckout() {
-				uni.showToast({
-					title: '结算功能开发中',
-					icon: 'none'
+				uni.navigateTo({
+					url: '/pages/shop/checkout?mod=cart'
 				})
 			}
 		}

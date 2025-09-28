@@ -125,6 +125,7 @@
 					page: this.page,
 					showExtJson: true,
 					showShopInfo: true,
+					type: 7,
 				}
 				if (this.tabIndex == 1) {
 					postData.status = 0
