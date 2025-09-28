@@ -42,6 +42,7 @@ const store = createStore({
 		versionNum: undefined,
 		selectedCity: lifeData.selectedCity ? lifeData.selectedCity : null,
 		apiUserInfoMap: undefined,
+		shippingCarInfo: undefined,
 	},
 	mutations: {
 		$uStore(state, payload) {

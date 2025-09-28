@@ -249,6 +249,19 @@
 					_this.vuex('shopIds', res.data.shopIds)
 				}
 			},
+			/**
+			 * 读取购物车数据
+			 * https://www.yuque.com/apifm/nu0f75/awql14
+			 */
+			async _shippingCarInfo() {
+				const _this = this.$vm ? this.$vm : this
+				const res = await _this.$wxapi.shippingCarInfo(_this.token)
+				if (res.code == 0) {
+					_this.vuex('shippingCarInfo', res.data)
+				} else {
+					_this.vuex('shippingCarInfo', null)
+				}
+			},
 		}
 	}
 </script>

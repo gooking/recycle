@@ -4,7 +4,7 @@
 			<mp-html :content="cmsPage.info.content" />
 		</view>
 		<view v-if="key == 'jiankanfuwu'" class="kefu-btn submit-bar">
-			<button type="primary" @click="kefu"><uni-icons type="phone" size="32rpx" color="#fff"></uni-icons>{{ sysconfigMap.kefu_tel }}</button>
+			<button type="primary" @click="kefu"><uni-icons type="phone" size="32rpx" color="#fff"></uni-icons>{{ sysconfigMap.kf_tel }}</button>
 		</view>
 	</view>
 </template>
@@ -41,7 +41,7 @@
 			},
 			kefu() {
 				uni.makePhoneCall({
-					phoneNumber: this.sysconfigMap.kefu_tel
+					phoneNumber: this.sysconfigMap.kf_tel
 				})
 			},
 		}

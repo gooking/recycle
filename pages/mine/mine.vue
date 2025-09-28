@@ -70,12 +70,22 @@
 			</view>
 
 			<view class="menu-divider"></view>
-
 			<view class="menu-item" @click="about">
 				<view class="menu-icon">
 					<image src="/static/images/mine/about.png" mode="aspectFit"></image>
 				</view>
 				<text class="menu-title">关于我们</text>
+				<view class="menu-arrow">
+					<uni-icons type="right" size="32rpx" color="#999"></uni-icons>
+				</view>
+			</view>
+			
+			<view class="menu-divider"></view>
+			<view class="menu-item" @click="contactService">
+				<view class="menu-icon">
+					<image src="/static/images/mine/about.png" mode="aspectFit"></image>
+				</view>
+				<text class="menu-title">联系客服</text>
 				<view class="menu-arrow">
 					<uni-icons type="right" size="32rpx" color="#999"></uni-icons>
 				</view>
@@ -168,6 +178,11 @@
 			about() {
 				uni.navigateTo({
 					url: '/pages/mine/about?key=about'
+				})
+			},
+			contactService() {
+				uni.makePhoneCall({
+					phoneNumber: this.sysconfigMap.kf_tel
 				})
 			},
 			goToFeedback() {
