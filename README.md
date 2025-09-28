@@ -65,7 +65,7 @@
 
 | 我的 | 修改资料 | 意见反馈 |
 | :------: | :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/19/169682a1-a7ea-48d5-b8ee-6a529ae7b303.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/e9f1319d-54c2-424a-b079-31e629dc620b.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/6a7f466e-b3b6-4632-8d35-1ddda3391fe5.png" width="300px"> |
+| <img src="https://dcdn.it120.cc/2025/09/28/3c417e28-3752-448c-adcf-091d798bae97.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/e9f1319d-54c2-424a-b079-31e629dc620b.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/19/6a7f466e-b3b6-4632-8d35-1ddda3391fe5.png" width="300px"> |
 
 | 关于我们 | 账户余额 | 申请提现 |
 | :------: | :------: | :------: |
@@ -82,6 +82,10 @@
 | 购物车 | 确认订单 |
 | :------: | :------: |
 | <img src="https://dcdn.it120.cc/2025/09/28/818e781a-67d2-446e-97b3-75bac4702e61.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/28/bd6d6c5a-4adf-4248-93a2-ba93303bf672.png" width="300px"> |
+
+| 商城订单列表 | 商城订单详情 |
+| :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/09/28/f4da5bfe-5dcf-4c99-87c7-7e306c6d3381.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/28/8474b0c9-b49e-4005-ae8b-5a08995ceb9e.png" width="300px"> |
 
 ## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/wechat-app-mall)

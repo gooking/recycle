@@ -118,13 +118,10 @@
 			if (this.productId) {
 				this.loadProductDetail()
 				this.updateCartBadge()
-				this.updateCartCount()
 			}
 		},
 		
 		onShow() {
-			// 页面显示时更新购物车数量
-			this.updateCartCount()
 		},
 		
 		methods: {
@@ -256,7 +253,6 @@
 					})
 					// 更新购物车角标和数量
 					this.updateCartBadge()
-					this.updateCartCount()
 				} else {
 					uni.showToast({
 						title: res.msg || '添加失败',
@@ -269,10 +265,15 @@
 			 * 立即购买 - 预留给用户自己实现
 			 */
 			buyNow() {
-				// 这里预留给用户自己补充立即购买的逻辑
-				uni.showToast({
-					title: '立即购买功能待实现',
-					icon: 'none'
+				uni.setStorageSync('bugGoodsInfo', {
+					goodsId: this.productId,
+					number: 1,
+					pic: this.productDetail.basicInfo.pic,
+					name: this.productDetail.basicInfo.name,
+					score: this.productDetail.basicInfo.minScore,
+				})
+				uni.navigateTo({
+					url: '/pages/shop/checkout?mod=buy'
 				})
 			},
 			async updateCartBadge() {
@@ -290,22 +291,6 @@
 					this.navOptions[2].info = ''
 				}
 			},
-			
-			/**
-			 * 更新购物车数量
-			 */
-			async updateCartCount() {
-				try {
-					await getApp()._shippingCarInfo()
-					if (this.shippingCarInfo && this.shippingCarInfo.items) {
-						this.cartCount = this.shippingCarInfo.items.reduce((total, item) => total + item.number, 0)
-					} else {
-						this.cartCount = 0
-					}
-				} catch (error) {
-					this.cartCount = 0
-				}
-			}
 		}
 	}
 </script>

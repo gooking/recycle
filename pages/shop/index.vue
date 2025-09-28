@@ -302,6 +302,7 @@
 						title: '添加成功',
 						icon: 'success'
 					})
+					getApp()._shippingCarInfo()
 				} else {
 					uni.showToast({
 						title: res.msg || '添加失败',

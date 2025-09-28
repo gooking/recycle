@@ -192,7 +192,8 @@
 					this.goodsList = this.shippingCarInfo.items.filter(item => item.selected)
 					this.totalGoods = this.shippingCarInfo.number
 				} else {
-					
+					const bugGoodsInfo = uni.getStorageSync('bugGoodsInfo')
+					this.goodsList = [bugGoodsInfo]
 				}
 				this.submitOrder(true)
 			},
@@ -281,7 +282,14 @@
 					// 预下单
 					this.totalScore = res.data.score
 				} else {
-					// 正式下单
+					// 正式下单, 删除购物车数据 https://www.yuque.com/apifm/nu0f75/pndgyc
+					if(this.mode == 'cart') {
+						const keys = []
+						this.goodsList.forEach(ele => {
+							keys.push(ele.key)
+						})
+						await this.$wxapi.shippingCarInfoRemoveItem(this.token, keys.join())
+					}
 					uni.showModal({
 						content: '订单提交成功',
 						showCancel: false,
@@ -290,7 +298,7 @@
 							 * 用积分支付订单
 							 * https://www.yuque.com/apifm/nu0f75/lwt2vi
 							 */
-							const resPay = this.$wxapi.orderPayV2({
+							const resPay = await this.$wxapi.orderPayV2({
 								token: this.token,
 								orderId: res.data.id
 							})

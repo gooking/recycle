@@ -211,6 +211,7 @@
 			"path": "pages/shop/order-detail",
 			"style": {
 				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": true,
 				"backgroundColor": "#f3f8f9",
 				"backgroundColorTop": "#f3f8f9",
 				"backgroundColorBottom": "#f3f8f9",
