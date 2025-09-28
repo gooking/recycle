@@ -180,7 +180,11 @@
 		{
 			"path": "pages/shop/cart",
 			"style": {
-				"navigationBarTitleText": "购物车"
+				"navigationBarTitleText": "购物车",
+				"backgroundColor": "#f3f8f9",
+				"backgroundColorTop": "#f3f8f9",
+				"backgroundColorBottom": "#f3f8f9",
+				"navigationBarBackgroundColor": "#f3f8f9"
 			}
 		}
 	],

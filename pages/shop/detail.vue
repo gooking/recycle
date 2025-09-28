@@ -70,19 +70,11 @@
 				@buttonClick="onButtonClick" 
 			/>
 		</view>
-		
-		<!-- 漂浮购物车按钮 -->
-		<floating-cart :cartCount="cartCount"></floating-cart>
 	</view>
 </template>
 
 <script>
-	import FloatingCart from '@/components/floating-cart/floating-cart.vue'
-	
 	export default {
-		components: {
-			FloatingCart
-		},
 		data() {
 			return {
 				productId: '', // 商品ID
