@@ -269,10 +269,9 @@
 			 * 商品点击处理
 			 */
 			handleProductClick(product) {
-				// todo 跳转到商品详情页面
-				// uni.navigateTo({
-				// 	url: `/pages/shop/detail?id=${product.id}`
-				// })
+				uni.navigateTo({
+					url: `/pages/shop/detail?id=${product.id}`
+				})
 			},
 			
 			/**

@@ -170,6 +170,12 @@
 				"backgroundColorBottom": "#f3f8fa",
 				"navigationBarBackgroundColor": "#f3f8fa"
 			}
+		},
+		{
+			"path": "pages/shop/detail",
+			"style": {
+				"navigationBarTitleText": "商品详情"
+			}
 		}
 	],
 	"globalStyle": {
