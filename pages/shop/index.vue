@@ -124,6 +124,9 @@
 				</view>
 			</view>
 		</view>
+		
+		<!-- 漂浮购物车按钮 -->
+		<floating-cart></floating-cart>
 	</view>
 </template>
 
@@ -155,7 +158,6 @@
 		},
 		
 		onShow() {
-			// 页面显示时刷新数据
 		},
 		
 		// 上拉加载更多
@@ -315,7 +317,7 @@
 				uni.navigateTo({
 					url: '/pages/shop/goods-list'
 				})
-			}
+			},
 		}
 	}
 </script>

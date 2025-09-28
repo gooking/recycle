@@ -70,16 +70,25 @@
 				@buttonClick="onButtonClick" 
 			/>
 		</view>
+		
+		<!-- 漂浮购物车按钮 -->
+		<floating-cart :cartCount="cartCount"></floating-cart>
 	</view>
 </template>
 
 <script>
+	import FloatingCart from '@/components/floating-cart/floating-cart.vue'
+	
 	export default {
+		components: {
+			FloatingCart
+		},
 		data() {
 			return {
 				productId: '', // 商品ID
 				productDetail: undefined, // 商品详情
 				productImages: [], // 商品图片列表
+				cartCount: 0, // 购物车商品数量
 				
 				// 底部导航配置
 				navOptions: [
@@ -117,7 +126,13 @@
 			if (this.productId) {
 				this.loadProductDetail()
 				this.updateCartBadge()
+				this.updateCartCount()
 			}
+		},
+		
+		onShow() {
+			// 页面显示时更新购物车数量
+			this.updateCartCount()
 		},
 		
 		methods: {
@@ -215,9 +230,8 @@
 			 * 前往购物车
 			 */
 			goToCart() {
-				uni.showToast({
-					title: '购物车功能开发中',
-					icon: 'none'
+				uni.navigateTo({
+					url: '/pages/shop/cart'
 				})
 			},
 			
@@ -248,8 +262,9 @@
 						title: '添加成功',
 						icon: 'success'
 					})
-					// 更新购物车角标
+					// 更新购物车角标和数量
 					this.updateCartBadge()
+					this.updateCartCount()
 				} else {
 					uni.showToast({
 						title: res.msg || '添加失败',
@@ -283,6 +298,22 @@
 					this.navOptions[2].info = ''
 				}
 			},
+			
+			/**
+			 * 更新购物车数量
+			 */
+			async updateCartCount() {
+				try {
+					await getApp()._shippingCarInfo()
+					if (this.shippingCarInfo && this.shippingCarInfo.items) {
+						this.cartCount = this.shippingCarInfo.items.reduce((total, item) => total + item.number, 0)
+					} else {
+						this.cartCount = 0
+					}
+				} catch (error) {
+					this.cartCount = 0
+				}
+			}
 		}
 	}
 </script>

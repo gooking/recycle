@@ -83,7 +83,7 @@
 			<view class="menu-divider"></view>
 			<view class="menu-item" @click="contactService">
 				<view class="menu-icon">
-					<image src="/static/images/mine/about.png" mode="aspectFit"></image>
+					<image src="/static/images/mine/service.svg" mode="aspectFit"></image>
 				</view>
 				<text class="menu-title">联系客服</text>
 				<view class="menu-arrow">

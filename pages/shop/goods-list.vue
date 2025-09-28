@@ -72,6 +72,8 @@
 				</view>
 			</view>
 		</view>
+		<!-- 漂浮购物车按钮 -->
+		<floating-cart></floating-cart>
 	</view>
 </template>
 
