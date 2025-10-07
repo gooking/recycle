@@ -203,7 +203,7 @@
 			 * https://www.yuque.com/apifm/nu0f75/wrqkcb
 			 */
 			async loadUserScore() {
-				const res = await this.$wxapi.userAmount(this.token)
+				const res = await this.$wxapi.userAmountV2(this.token)
 				if(res.code == 0) {
 					this.userAvailableScore = res.data.score
 				}

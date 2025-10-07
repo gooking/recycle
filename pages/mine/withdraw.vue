@@ -111,7 +111,7 @@
 				uni.showLoading({
 					title: ''
 				})
-				const res = await this.$wxapi.userAmount(this.token)
+				const res = await this.$wxapi.userAmountV2(this.token)
 				uni.hideLoading()
 				if(res.code == 0) {
 					this.availableBalance = res.data.balance

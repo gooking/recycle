@@ -161,7 +161,7 @@
 		},
 		onShow() {
 			this.userDetail()
-			this.userAmount()
+			this.userAmountV2()
 		},
 		methods: {
 			async userDetail() {
@@ -175,12 +175,12 @@
 					this.userInfo = res.data
 				}
 			},
-			async userAmount() {
+			async userAmountV2() {
 				// https://www.yuque.com/apifm/nu0f75/wrqkcb
 				uni.showLoading({
 					title: ''
 				})
-				const res = await this.$wxapi.userAmount(this.token)
+				const res = await this.$wxapi.userAmountV2(this.token)
 				uni.hideLoading()
 				if(res.code == 0) {
 					this.balance = res.data.balance
