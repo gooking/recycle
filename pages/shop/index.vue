@@ -105,8 +105,10 @@
 							<text class="product-title">{{ product.name }}</text>
 							<view class="product-price">
 								<view class="price-left">
-									<text class="score-price">{{ product.minScore }}积分</text>
-									<text v-if="product.originalPrice" class="market-price">¥{{ product.originalPrice }}</text>
+									<text v-if="product.minPrice" class="score-price">￥{{ product.minPrice }}</text>
+									<text v-if="product.minPrice && product.minScore" class="add-plus">+</text>
+									<text v-if="product.minScore" class="score-price">{{ product.minScore }}积分</text>
+									<text v-if="product.originalPrice && (!product.minPrice || !product.minScore)" class="market-price">¥{{ product.originalPrice }}</text>
 								</view>
 							</view>
 							<view class="product-actions">
@@ -593,6 +595,11 @@
 								color: #30BCB7;
 								font-weight: 600;
 								margin-right: 12rpx;
+							}
+							.add-plus {
+								padding-right: 12rpx;
+								color: #999;
+								font-size: 24rpx;
 							}
 							
 							.market-price {

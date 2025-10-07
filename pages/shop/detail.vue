@@ -32,7 +32,9 @@
 			
 			<view class="product-price-section">
 				<view class="price-main">
-					<text class="score-price">{{ productDetail.basicInfo.minScore }}积分</text>
+					<text v-if="productDetail.basicInfo.minPrice" class="score-price">￥{{ productDetail.basicInfo.minPrice }}</text>
+					<text v-if="productDetail.basicInfo.minPrice && productDetail.basicInfo.minScore" class="add-plus">+</text>
+					<text v-if="productDetail.basicInfo.minScore" class="score-price">{{ productDetail.basicInfo.minScore }}积分</text>
 					<text v-if="productDetail.basicInfo.originalPrice" class="market-price">¥{{ productDetail.basicInfo.originalPrice }}</text>
 				</view>
 			</view>
@@ -433,5 +435,10 @@
 		background: #fff;
 		border-top: 2rpx solid #F0F0F0;
 		padding-bottom: env(safe-area-inset-bottom);
+	}
+	.add-plus {
+		padding-right: 12rpx;
+		color: #999;
+		font-size: 24rpx;
 	}
 </style>

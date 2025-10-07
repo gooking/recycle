@@ -6,7 +6,7 @@
     "build:mp-weixin": "npx uni-app build --platform mp-weixin --mode production"
   },
   "dependencies": {
-    "apifm-uniapp": "^25.7.2",
+    "apifm-uniapp": "^25.10.7",
     "dayjs": "^1.11.18"
   }
 }

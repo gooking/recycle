@@ -57,7 +57,9 @@
 									<view class="item-details">
 										<text class="item-name">{{ item.name }}</text>
 										<view class="item-price">
-											<text class="score-price">{{ item.score }}积分</text>
+											<text v-if="item.price" class="score-price">￥{{ item.price }}</text>
+											<text v-if="item.price && item.score" class="add-plus">+</text>
+											<text v-if="item.score" class="score-price">{{ item.score }}积分</text>
 											<text v-if="item.originalPrice" class="original-price">¥{{ item.originalPrice }}</text>
 										</view>
 									</view>
@@ -84,7 +86,9 @@
 				<view class="checkout-left">
 					<view class="total-info">
 						<text class="total-label">合计：</text>
-						<text class="total-score">{{ shippingCarInfo.score }}积分</text>
+						<text v-if="shippingCarInfo.price" class="total-score">￥{{ shippingCarInfo.price }}</text>
+						<text v-if="shippingCarInfo.price && shippingCarInfo.score" class="add-plus">+</text>
+						<text v-if="shippingCarInfo.score" class="total-score">{{ shippingCarInfo.score }}积分</text>
 					</view>
 					<text class="selected-count">已选{{ shippingCarInfo.number }}件</text>
 				</view>
@@ -557,5 +561,11 @@
 				}
 			}
 		}
+	}
+	.add-plus {
+		padding: 0 8rpx;
+		padding-left: 18rpx;
+		color: #999;
+		font-size: 24rpx;
 	}
 </style>

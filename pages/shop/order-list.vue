@@ -44,7 +44,9 @@
 							<view class="goods-info">
 								<text class="goods-name">{{ goods.goodsName }}</text>
 								<view class="goods-price-info">
-									<text class="score-price">{{ goods.score }}积分</text>
+									<text v-if="goods.amount" class="score-price">￥{{ goods.amount }}</text>
+									<text v-if="goods.amount && goods.score" class="add-plus">+</text>
+									<text v-if="goods.score" class="score-price">{{ goods.score }}积分</text>
 									<text v-if="goods.originalPrice" class="original-price">¥{{ goods.originalPrice }}</text>
 								</view>
 								<view class="goods-quantity">
@@ -76,7 +78,9 @@
 					<view class="order-footer">
 						<view class="order-total">
 							<text class="total-label">总计：</text>
-							<text class="total-score">{{ order.amountReal }}积分</text>
+							<text v-if="order.amountReal" class="total-score">￥{{ order.amountReal }}</text>
+							<text v-if="order.amountReal && order.score" class="add-plus">+</text>
+							<text v-if="order.score" class="total-score">{{ order.score }}积分</text>
 						</view>
 						<view v-if="order.status == 0" class="order-actions">
 							<view class="action-btn cancel-btn" @click.stop="cancelOrder(orderIndex, order)">
@@ -646,5 +650,10 @@
 			opacity: 0.6;
 			transform: scale(1.2);
 		}
+	}
+	.add-plus {
+		padding: 0 12rpx;
+		color: #999;
+		font-size: 24rpx;
 	}
 </style>

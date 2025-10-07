@@ -58,7 +58,9 @@
 						<view class="goods-info">
 							<text class="goods-name">{{ item.name }}</text>
 							<view class="goods-price-info">
-								<text class="score-price">{{ item.score }}积分</text>
+								<text v-if="item.price" class="score-price">￥{{ item.price }}</text>
+								<text v-if="item.price && item.score" class="add-plus">+</text>
+								<text v-if="item.score" class="score-price">{{ item.score }}积分</text>
 								<text v-if="item.originalPrice" class="original-price">¥{{ item.originalPrice }}</text>
 							</view>
 							<view class="goods-quantity">
@@ -101,18 +103,30 @@
 				</view>
 				
 				<view class="price-content">
-					<view class="price-item">
+					<view v-if="amountReal" class="price-item">
+						<text class="price-label">需要支付：</text>
+						<text class="price-value required-score">￥{{ amountReal }}</text>
+					</view>
+					<view v-if="totalScore" class="price-item">
 						<text class="price-label">所需积分：</text>
 						<text class="price-value required-score">{{ totalScore }}积分</text>
 					</view>
-					<view class="price-item">
+					<view v-if="amountReal" class="price-item">
+						<text class="price-label">可用余额：</text>
+						<text class="price-value available-score">￥{{ balance }}</text>
+					</view>
+					<view v-if="totalScore" class="price-item">
 						<text class="price-label">可用积分：</text>
 						<text class="price-value available-score">{{ userAvailableScore }}积分</text>
 					</view>
 					<view class="price-divider"></view>
-					<view class="price-item final-price">
+					<view v-if="totalScore" class="price-item final-price">
 						<text class="price-label">应付积分：</text>
 						<text class="price-value total-pay">{{ totalScore }}积分</text>
+					</view>
+					<view v-if="amountReal" class="price-item final-price">
+						<text class="price-label">剩余支付：</text>
+						<text class="price-value total-pay">￥{{ amountReal }}</text>
 					</view>
 				</view>
 			</view>
@@ -124,7 +138,8 @@
 				<view class="nav-left">
 					<view class="goods-summary">
 						<text class="goods-count">共{{ totalGoods }}件商品</text>
-						<text class="total-score">应付{{ totalScore }}积分</text>
+						<text v-if="amountReal" class="total-score">￥{{ amountReal }}</text>
+						<text v-if="totalScore" class="total-score">{{ totalScore }}积分</text>
 					</view>
 				</view>
 				<view class="nav-right">
@@ -156,10 +171,12 @@
 				orderRemark: '',
 				// 用户可用积分
 				userAvailableScore: 0,
+				balance: 0,
 				// 总积分
 				totalScore: 0,
 				// 总商品数
-				totalGoods: 0
+				totalGoods: 0,
+				amountReal: 0,
 			}
 		},
 		
@@ -206,6 +223,7 @@
 				const res = await this.$wxapi.userAmountV2(this.token)
 				if(res.code == 0) {
 					this.userAvailableScore = res.data.score
+					this.balance = res.data.balance
 				}
 			},
 			
@@ -281,6 +299,7 @@
 				if (calculate) {
 					// 预下单
 					this.totalScore = res.data.score
+					this.amountReal = res.data.amountReal
 				} else {
 					// 正式下单, 删除购物车数据 https://www.yuque.com/apifm/nu0f75/pndgyc
 					if(this.mode == 'cart') {
@@ -718,5 +737,11 @@
 				}
 			}
 		}
+	}
+	.add-plus {
+		padding: 0 8rpx;
+		padding-left: 18rpx;
+		color: #999;
+		font-size: 24rpx;
 	}
 </style>

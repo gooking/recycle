@@ -74,7 +74,9 @@
 					<view class="goods-info">
 						<text class="goods-name">{{ item.goodsName }}</text>
 						<view class="goods-price-info">
-							<text class="score-price">{{ item.score }}积分</text>
+							<text v-if="item.amount" class="score-price">￥{{ item.amount }}</text>
+							<text v-if="item.amount && item.score" class="add-plus">+</text>
+							<text v-if="item.score" class="score-price">{{ item.score }}积分</text>
 							<text v-if="item.originalPrice" class="original-price">¥{{ item.originalPrice }}</text>
 						</view>
 						<view class="goods-quantity">
@@ -134,7 +136,8 @@
 				</view> -->
 				<view class="info-item total-item">
 					<text class="info-label">总计：</text>
-					<text class="info-value total-value">{{ orderDetail.orderInfo.score }}积分</text>
+					<text v-if="orderDetail.orderInfo.amountReal" class="info-value total-value">￥{{ orderDetail.orderInfo.amountReal }}</text>
+					<text v-if="orderDetail.orderInfo.score" class="info-value total-value">{{ orderDetail.orderInfo.score }}积分</text>
 				</view>
 			</view>
 		</view>
@@ -1011,5 +1014,10 @@
 				}
 			}
 		}
+	}
+	.add-plus {
+		padding: 0 12rpx;
+		color: #999;
+		font-size: 24rpx;
 	}
 </style>
