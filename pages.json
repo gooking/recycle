@@ -217,6 +217,51 @@
 				"backgroundColorBottom": "#f3f8f9",
 				"navigationBarBackgroundColor": "#f3f8f9"
 			}
+		},
+		{
+			"path": "pages/bargain/index",
+			"style": {
+				"navigationBarTitleText": "砍价专区",
+				"navigationStyle": "custom",
+				"backgroundColor": "#FF6B6B",
+				"backgroundColorTop": "#FF6B6B",
+				"backgroundColorBottom": "#F8F9FA",
+				"navigationBarBackgroundColor": "#FF6B6B",
+				"navigationBarTextStyle": "white",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/bargain/list",
+			"style": {
+				"navigationBarTitleText": "砍价商品",
+				"backgroundColor": "#F8F9FA",
+				"backgroundColorTop": "#F8F9FA",
+				"backgroundColorBottom": "#F8F9FA",
+				"navigationBarBackgroundColor": "#F8F9FA",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/bargain/detail",
+			"style": {
+				"navigationBarTitleText": "砍价详情",
+				"backgroundColor": "#F8F9FA",
+				"backgroundColorTop": "#F8F9FA",
+				"backgroundColorBottom": "#F8F9FA",
+				"navigationBarBackgroundColor": "#F8F9FA"
+			}
+		},
+		{
+			"path": "pages/bargain/my-list",
+			"style": {
+				"navigationBarTitleText": "我的砍价",
+				"backgroundColor": "#F8F9FA",
+				"backgroundColorTop": "#F8F9FA",
+				"backgroundColorBottom": "#F8F9FA",
+				"navigationBarBackgroundColor": "#F8F9FA",
+				"enablePullDownRefresh": true
+			}
 		}
 	],
 	"globalStyle": {

@@ -30,7 +30,7 @@
 				</view>
 			</view>
 			
-			<view class="product-price-section">
+			<view v-if="!kanjiaSet" class="product-price-section">
 				<view class="price-main">
 					<text v-if="productDetail.basicInfo.minPrice" class="score-price">￥{{ productDetail.basicInfo.minPrice }}</text>
 					<text v-if="productDetail.basicInfo.minPrice && productDetail.basicInfo.minScore" class="add-plus">+</text>
@@ -42,15 +42,111 @@
 			<view class="product-stats">
 				<view class="stat-item">
 					<text class="stat-label">库存</text>
-					<text class="stat-value">{{ productDetail.basicInfo.stores }} 件</text>
+					<text class="stat-value">{{ kanjiaSet ? kanjiaSet.number : productDetail.basicInfo.stores }} 件</text>
 				</view>
 				<view class="stat-divider"></view>
 				<view class="stat-item">
 					<text class="stat-label">销量</text>
-					<text class="stat-value">{{ productDetail.basicInfo.numberSells }} 件</text>
+					<text class="stat-value">{{ kanjiaSet ? kanjiaSet.numberBuy : productDetail.basicInfo.numberSells }} 件</text>
 				</view>
 			</view>
 		</view>
+		
+		<template v-if="kanjiaSet">
+			<view class="product-detail-section">
+				<view class="section-header">
+					<text class="section-title">砍价信息</text>
+				</view>
+				<view style="padding: 32rpx;padding-bottom: 0;">
+					<view class="price-section">
+						<view class="current-price">
+							<text class="price-symbol">¥</text>
+							<text class="price-value">{{ currentPrice }}</text>
+							<text class="price-symbol">当前价</text>
+						</view>
+						<view class="price-info">
+							<text class="original-price">原价¥{{ kanjiaSet.originalPrice }}</text>
+							<text class="bottom-price">底价¥{{ kanjiaSet.minPrice }}</text>
+						</view>
+					</view>
+				</view>
+				<uni-list :border="false">
+					<uni-list-item title="助力金额" note="好友帮忙砍一刀可优惠金额">
+						<template v-slot:footer>
+							<view class="price-section small">
+								<view class="current-price">
+									<text v-if="kanjiaSet.helpPriceMin != kanjiaSet.helpPriceMax" class="price-value">{{ kanjiaSet.helpPriceMin }}</text>
+									<text v-if="kanjiaSet.helpPriceMin != kanjiaSet.helpPriceMax" class="price-symbol">~</text>
+									<text class="price-value">{{ kanjiaSet.helpPriceMax }}</text>
+								</view>
+							</view>
+						</template>
+					</uni-list-item>
+				</uni-list>
+				<view class="countdown">
+					<uni-countdown :font-size="24" :second="countdownSeconds" color="#FFFFFF" splitorColor="#ce5656" background-color="#FF6B6B" />
+				</view>
+			</view>
+			<view style="height: 20rpx;"></view>
+		</template>
+		
+		<!-- 砍价进度区域 -->
+		<template v-if="kanjiaDetail">
+			<view class="progress-section">
+				<view class="section-header">
+					<text class="section-title">砍价进度</text>
+					<view class="progress-stats">
+						<text class="progress-text">{{ kanjiaDetail.kanjiaInfo.helpNumber }} 人助力</text>
+					</view>
+				</view>
+				
+				<!-- 酷炫进度条 -->
+				<view class="progress-container">
+					<view class="progress-track">
+						<view class="progress-fill" :style="{ width: progressPercent + '%' }">
+							<view class="progress-glow"></view>
+						</view>
+						<view class="progress-thumb" :style="{ left: progressPercent + '%' }">
+							<view class="thumb-inner"></view>
+							<view class="thumb-pulse"></view>
+						</view>
+					</view>
+					<view class="progress-labels">
+						<text class="start-label">¥{{ kanjiaSet.originalPrice }}</text>
+						<text class="end-label">¥{{ kanjiaDetail.kanjiaInfo.minPrice }}</text>
+					</view>
+				</view>
+			</view>
+			<!-- 助力用户列表 -->
+			<view v-if="kanjiaDetail.helps" class="helper-section">
+				<view class="section-header">
+					<text class="section-title">助力好友 ({{ kanjiaDetail.helps.length }})</text>
+					<view class="invite-tip">
+						<text class="tip-text">邀请更多好友助力砍价</text>
+					</view>
+				</view>
+				
+				<view class="helper-list">
+					<view 
+						v-for="(helper, index) in helperList" 
+						:key="index"
+						class="helper-item"
+					>
+						<image :src="helper.avatar" class="helper-avatar" mode="aspectFill"></image>
+						<view class="helper-info">
+							<text class="helper-name">{{ helper.nickname }}</text>
+							<text class="helper-time">{{ formatTime(helper.helpTime) }}</text>
+						</view>
+						<view class="helper-amount">
+							<text class="amount-text">-¥{{ helper.amount }}</text>
+						</view>
+						<view class="helper-effect">
+							<view class="effect-circle"></view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</template>
 		
 		<!-- 商品详情 -->
 		<view class="product-detail-section">
@@ -63,7 +159,7 @@
 		</view>
 		
 		<!-- 底部购买导航 -->
-		<view class="goods-nav-container">
+		<view v-if="footButtonOK" class="goods-nav-container">
 			<uni-goods-nav 
 				:fill="true" 
 				:options="navOptions" 
@@ -76,6 +172,7 @@
 </template>
 
 <script>
+	import dayjs from 'dayjs'
 	export default {
 		data() {
 			return {
@@ -102,21 +199,31 @@
 				],
 				buttonGroup: [
 					{
+						key: 'addCart',
 						text: '加入购物车',
 						backgroundColor: '#30BCB7',
 						color: '#fff'
 					},
 					{
+						key: 'buyImmediately',
 						text: '立即购买',
 						backgroundColor: '#FF6B6B',
 						color: '#fff'
 					}
-				]
+				],
+				kanjiaSet: undefined,
+				currentPrice: undefined,
+				countdownSeconds: 0,
+				kanjiaJoiner: undefined, // 发起砍价的用户编号
+				kanjiaDetail: undefined, // 砍价进程数据
+				footButtonOK: false,
+				progressPercent: 0, // 进度百分比
 			}
 		},
 		
 		onLoad(options) {
 			this.productId = options.id
+			this.kanjiaJoiner = options.kanjiaJoiner || this.uid
 			if (this.productId) {
 				this.loadProductDetail()
 				this.updateCartBadge()
@@ -145,6 +252,12 @@
 				if (res.code == 0) {
 					this.productDetail = res.data
 					this.productImages = res.data.pics2
+					this.currentPrice = res.data.basicInfo.minPrice
+					if (res.data.basicInfo.kanjia) {
+						this._kanjiaSet()
+					} else {
+						this.footButtonOK = true
+					}
 				} else {
 					uni.showModal({
 						content: res.msg,
@@ -188,13 +301,16 @@
 			 * 购买按钮点击
 			 */
 			onButtonClick(e) {
-				const { index } = e
-				switch(index) {
-					case 0: // 加入购物车
+				const { index, content } = e
+				switch(content.key) {
+					case 'addCart': // 加入购物车
 						this.addToCart()
 						break
-					case 1: // 立即购买
+					case 'buyImmediately': // 立即购买
 						this.buyNow()
+						break
+					case 'kanjiaJoin': // 发起砍价
+						this.kanjiaJoin()
 						break
 				}
 			},
@@ -291,6 +407,73 @@
 					this.navOptions[2].info = cartNumber
 				} else {
 					this.navOptions[2].info = ''
+				}
+			},
+			async _kanjiaSet() {
+				// https://www.yuque.com/apifm/nu0f75/xs42ih
+				const res = await this.$wxapi.kanjiaSet(this.productId)
+				if(res.code == 0) {
+					this.kanjiaSet = res.data[0]
+					this.countdownSeconds = dayjs(this.kanjiaSet.dateEnd).diff(dayjs(), 'second')
+					this._kanjiaDetail()
+				} else {
+					this.footButtonOK = true
+				}
+			},
+			async _kanjiaDetail() {
+				// 读取砍价进程 https://www.yuque.com/apifm/nu0f75/taxkl5
+				const res = await this.$wxapi.kanjiaDetail(this.kanjiaSet.id, this.kanjiaJoiner)
+				if(res.code == 0) {
+					this.kanjiaDetail = res.data
+					this.currentPrice = res.data.kanjiaInfo.curPrice
+					this.progressPercent = Math.floor((res.data.kanjiaInfo.minPrice / res.data.kanjiaInfo.curPrice) * 100)
+					// 底部按钮修改
+					this.buttonGroup = [
+						{
+							key: '111',
+							text: '邀请助力',
+							backgroundColor: '#30BCB7',
+							color: '#fff'
+						},
+						{
+							key: '222',
+							text: '当前价购买',
+							backgroundColor: '#FF6B6B',
+							color: '#fff'
+						}
+					]
+				} else {
+					// 底部显示发起砍价的按钮
+					this.buttonGroup = [
+						{
+							key: 'kanjiaJoin',
+							text: '我要砍价',
+							backgroundColor: '#FF6B6B',
+							color: '#fff'
+						}
+					]
+				}
+				this.footButtonOK = true
+			},
+			async kanjiaJoin() {
+				// 发起砍价 https://www.yuque.com/apifm/nu0f75/okrgov
+				uni.showLoading({
+					title: ''
+				})
+				const res = await this.$wxapi.kanjiaJoin(this.token, this.kanjiaSet.id)
+				uni.hideLoading()
+				if (res.code == 0) {
+					uni.showModal({
+						content: '发起砍价成功，赶快邀请好友帮你砍一刀吧~',
+						showCancel: false,
+					})
+					this.kanjiaJoiner = this.uid
+					this._kanjiaDetail()
+				} else {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
 				}
 			},
 		}
@@ -440,5 +623,288 @@
 		padding-right: 12rpx;
 		color: #999;
 		font-size: 24rpx;
+	}
+	.price-section {
+		margin-bottom: 32rpx;
+		
+		.current-price {
+			display: flex;
+			align-items: baseline;
+			margin-bottom: 12rpx;
+			
+			.price-symbol {
+				font-size: 36rpx;
+				color: #FF6B6B;
+				font-weight: 700;
+			}
+			
+			.price-value {
+				font-size: 72rpx;
+				color: #FF6B6B;
+				font-weight: 700;
+				margin-left: 8rpx;
+			}
+		}
+		
+		&.small {
+			.current-price {
+				.price-symbol {
+					font-size: 26rpx;
+					padding-left: 8rpx;
+				}
+				.price-value {
+					font-size: 32rpx;
+				}
+			}
+		}
+		
+		.price-info {
+			display: flex;
+			align-items: center;
+			gap: 24rpx;
+			
+			.original-price {
+				font-size: 28rpx;
+				color: #999;
+				text-decoration: line-through;
+			}
+			
+			.bottom-price {
+				font-size: 28rpx;
+				color: #4CAF50;
+				font-weight: 500;
+			}
+		}
+	}
+	.countdown {
+		display: flex;
+		justify-content: center;
+		padding: 32rpx;
+	}
+	/* 砍价进度区域 */
+	.progress-section {
+		background: #fff;
+		padding: 32rpx;
+		margin-bottom: 20rpx;
+		
+		.section-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 32rpx;
+			
+			.section-title {
+				font-size: 32rpx;
+				color: #333;
+				font-weight: 600;
+			}
+			
+			.progress-stats {
+				.progress-text {
+					font-size: 24rpx;
+					color: #FF6B6B;
+					font-weight: 500;
+				}
+			}
+		}
+		
+		.progress-container {
+			margin-bottom: 24rpx;
+			
+			.progress-track {
+				position: relative;
+				height: 16rpx;
+				background: #F0F0F0;
+				border-radius: 8rpx;
+				overflow: hidden;
+				margin-bottom: 16rpx;
+				
+				.progress-fill {
+					height: 100%;
+					background: linear-gradient(90deg, #FF6B6B 0%, #FF8E53 50%, #FFD700 100%);
+					border-radius: 8rpx;
+					position: relative;
+					transition: width 0.5s ease;
+					
+					.progress-glow {
+						position: absolute;
+						top: -4rpx;
+						right: -8rpx;
+						width: 32rpx;
+						height: 24rpx;
+						background: radial-gradient(ellipse, rgba(255, 107, 107, 0.6) 0%, transparent 70%);
+						border-radius: 50%;
+						animation: glow 2s ease-in-out infinite alternate;
+					}
+				}
+				
+				.progress-thumb {
+					position: absolute;
+					top: -8rpx;
+					width: 32rpx;
+					height: 32rpx;
+					transform: translateX(-50%);
+					transition: left 0.5s ease;
+					
+					.thumb-inner {
+						width: 100%;
+						height: 100%;
+						background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+						border-radius: 50%;
+						border: 4rpx solid #FFFFFF;
+						box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.4);
+					}
+					
+					.thumb-pulse {
+						position: absolute;
+						top: -8rpx;
+						left: -8rpx;
+						width: 48rpx;
+						height: 48rpx;
+						border: 2rpx solid #FF6B6B;
+						border-radius: 50%;
+						opacity: 0;
+						animation: pulse 2s ease-in-out infinite;
+					}
+				}
+			}
+			
+			.progress-labels {
+				display: flex;
+				justify-content: space-between;
+				
+				.start-label,
+				.end-label {
+					font-size: 24rpx;
+					color: #666;
+				}
+			}
+		}
+		
+		.success-tip {
+			display: flex;
+			align-items: center;
+			gap: 12rpx;
+			padding: 20rpx;
+			background: #E8F5E8;
+			border-radius: 16rpx;
+			
+			.success-text {
+				font-size: 28rpx;
+				color: #4CAF50;
+				font-weight: 500;
+			}
+		}
+	}
+	/* 助力用户列表 */
+	.helper-section {
+		background: #fff;
+		padding: 32rpx;
+		margin-bottom: 20rpx;
+		
+		.section-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 32rpx;
+			
+			.section-title {
+				font-size: 32rpx;
+				color: #333;
+				font-weight: 600;
+			}
+			
+			.invite-tip {
+				.tip-text {
+					font-size: 24rpx;
+					color: #999;
+				}
+			}
+		}
+		
+		.helper-list {
+			.helper-item {
+				display: flex;
+				align-items: center;
+				padding: 24rpx 0;
+				border-bottom: 2rpx solid #F8F9FA;
+				position: relative;
+				
+				&:last-child {
+					border-bottom: none;
+				}
+				
+				.helper-avatar {
+					width: 80rpx;
+					height: 80rpx;
+					border-radius: 50%;
+					margin-right: 24rpx;
+				}
+				
+				.helper-info {
+					flex: 1;
+					
+					.helper-name {
+						font-size: 28rpx;
+						color: #333;
+						font-weight: 500;
+						display: block;
+						margin-bottom: 8rpx;
+					}
+					
+					.helper-time {
+						font-size: 24rpx;
+						color: #999;
+					}
+				}
+				
+				.helper-amount {
+					.amount-text {
+						font-size: 32rpx;
+						color: #FF6B6B;
+						font-weight: 600;
+					}
+				}
+				
+				.helper-effect {
+					position: absolute;
+					right: 0;
+					top: 50%;
+					transform: translateY(-50%);
+					
+					.effect-circle {
+						width: 120rpx;
+						height: 120rpx;
+						border: 2rpx solid #FF6B6B;
+						border-radius: 50%;
+						opacity: 0;
+						animation: ripple 2s ease-in-out infinite;
+					}
+				}
+			}
+		}
+		
+		.empty-helper {
+			text-align: center;
+			padding: 80rpx 32rpx;
+			
+			.empty-image {
+				width: 200rpx;
+				height: 200rpx;
+				margin-bottom: 32rpx;
+			}
+			
+			.empty-text {
+				font-size: 28rpx;
+				color: #666;
+				margin-bottom: 12rpx;
+				display: block;
+			}
+			
+			.empty-desc {
+				font-size: 24rpx;
+				color: #999;
+			}
+		}
 	}
 </style>

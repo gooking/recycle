@@ -52,6 +52,9 @@
 				if (res.code == 0) {
 					const sysconfigMap = {}
 					res.data.forEach(config => {
+						if(config.key == 'bargain_data') {
+							config.value = JSON.parse(config.value)
+						}
 						sysconfigMap[config.key] = config.value
 					})
 					this.vuex('sysconfigMap', sysconfigMap)
