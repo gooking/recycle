@@ -137,7 +137,7 @@
 					>
 						<image :src="helper.avatarUrl || '/static/images/avatarUrl.png'" class="helper-avatar" mode="aspectFill"></image>
 						<view class="helper-info">
-							<text class="helper-name">{{ helper.nick }}</text>
+							<text class="helper-name">{{ helper.nick || ('好友' + helper.uid) }}</text>
 							<text class="helper-time">{{ helper.dateAdd }}</text>
 						</view>
 						<view class="helper-amount">
@@ -235,7 +235,20 @@
 		
 		onShow() {
 		},
-		
+		onShareAppMessage() {
+		    return {
+		      title: this.kanjiaDetail ? '帮我助力一下吧~' : this.sysconfigMap.mallName,
+		      path: '/pages/shop/detail?id='+ this.productId +'&inviter_id=' + (this.uid || '') +'&kanjiaJoiner=' + this.kanjiaJoiner,
+			  imageUrl: this.productDetail.basicInfo.pic,
+		    }
+		},
+		onShareTimeline() {    
+		    return {
+		      title: this.kanjiaDetail ? '帮我助力一下吧~' : this.sysconfigMap.mallName,
+		      query: 'id=' + this.productId + '&inviter_id=' + (this.uid || '') +'&kanjiaJoiner=' + this.kanjiaJoiner,
+		      imageUrl: this.productDetail.basicInfo.pic
+		    }
+		},
 		methods: {
 			/**
 			 * 加载商品详情
@@ -537,6 +550,12 @@
 							title: '已复制到剪切板'
 						})
 					}
+				})
+				// #endif
+				// #ifdef MP-WEIXIN
+				uni.showToast({
+					title: '点击右上角分享',
+					icon: 'none'
 				})
 				// #endif
 			},

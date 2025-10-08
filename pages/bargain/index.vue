@@ -9,6 +9,9 @@
 		
 		<!-- 自定义导航栏 -->
 		<view class="custom-navbar">
+			<!-- #ifdef MP-WEIXIN -->
+			<view style="height: 64rpx;"></view>
+			<!-- #endif -->
 			<view class="navbar-content">
 				<text class="navbar-title">砍价专区</text>
 				<view class="navbar-subtitle">
@@ -122,7 +125,7 @@
 						
 						<!-- 助力信息 -->
 						<view class="help-section">
-							<view class="helper-avatars">
+							<!-- <view class="helper-avatars">
 								<image 
 									v-for="(helper, hIndex) in product.helpers.slice(0, 3)" 
 									:key="hIndex"
@@ -133,7 +136,7 @@
 								<view v-if="product.helpers.length > 3" class="more-helpers">
 									<text class="more-text">+{{ product.helpers.length - 3 }}</text>
 								</view>
-							</view>
+							</view> -->
 							<text class="help-count">截止时间: {{ product.kanjiaSet.dateEnd }}</text>
 						</view>
 						

@@ -77,7 +77,7 @@
 
 | 积分商城 | 商品列表 | 商品详情 | 
 | :------: | :------: | :------: |
-| <img src="https://dcdn.it120.cc/2025/09/27/b8e229e5-cee4-45e3-bafa-6926f393c2d0.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/28/67c28c11-add3-4f85-a5fe-f0f967ba870c.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/28/575fc1ce-7a0c-45c6-9478-c0090253efb2.png" width="300px"> |
+| <img src="https://dcdn.it120.cc/2025/10/08/7a433d4a-98fc-412f-ac89-343e197dc849.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/28/67c28c11-add3-4f85-a5fe-f0f967ba870c.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/28/575fc1ce-7a0c-45c6-9478-c0090253efb2.png" width="300px"> |
 
 | 购物车 | 确认订单 |
 | :------: | :------: |
@@ -86,6 +86,10 @@
 | 商城订单列表 | 商城订单详情 |
 | :------: | :------: |
 | <img src="https://dcdn.it120.cc/2025/09/28/f4da5bfe-5dcf-4c99-87c7-7e306c6d3381.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/09/28/8474b0c9-b49e-4005-ae8b-5a08995ceb9e.png" width="300px"> |
+
+| 砍价频道 | 砍价功能 | 商品详情 | 
+| :------: | :------: | :------: |
+| <img src="https://dcdn.it120.cc/2025/10/08/ba544c33-4737-456c-8416-8a66200312be.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/10/08/0bf3c036-a7f2-43ae-b4c5-06adca27998c.png" width="300px"> | <img src="https://dcdn.it120.cc/2025/10/08/30d8bc8c-a116-4119-a6a6-03e84edb6b03.png" width="300px"> |
 
 ## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)  /  [GitCode镜像](https://gitcode.com/gooking2/wechat-app-mall)

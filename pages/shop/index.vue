@@ -75,6 +75,33 @@
 				</view>
 			</view>
 			
+			<!-- 砍价频道入口 -->
+			<view class="bargain-entry-section">
+				<view class="bargain-entry-banner" @click="handleBargainEntry">
+					<view class="bargain-content">
+						<view class="bargain-left">
+							<view class="bargain-icon">
+								<text class="icon-text">砍</text>
+							</view>
+							<view class="bargain-info">
+								<text class="bargain-title">砍价专区</text>
+								<text class="bargain-desc">邀请好友一起砍价，享受超值优惠</text>
+							</view>
+						</view>
+						<view class="bargain-right">
+							<view class="bargain-arrow">
+								<uni-icons type="right" size="32rpx" color="#FFFFFF"></uni-icons>
+							</view>
+						</view>
+					</view>
+					<view class="bargain-decoration">
+						<view class="decoration-dot dot1"></view>
+						<view class="decoration-dot dot2"></view>
+						<view class="decoration-dot dot3"></view>
+					</view>
+				</view>
+			</view>
+			
 			<!-- 商品列表 -->
 			<view class="product-section">
 				<view class="section-title">
@@ -321,6 +348,15 @@
 					url: '/pages/shop/goods-list'
 				})
 			},
+			
+			/**
+			 * 砍价频道入口点击
+			 */
+			handleBargainEntry() {
+				uni.navigateTo({
+					url: '/pages/bargain/index'
+				})
+			},
 		}
 	}
 </script>
@@ -475,7 +511,7 @@
 	
 	/* 商品分类区域 */
 	.category-section {
-		margin-bottom: 48rpx;
+		margin-bottom: 32rpx;
 		
 		.category-grid {
 			display: grid;
@@ -515,6 +551,140 @@
 					line-height: 36rpx;
 				}
 			}
+		}
+	}
+	
+	/* 砍价入口区域 */
+	.bargain-entry-section {
+		margin-bottom: 32rpx;
+		
+		.bargain-entry-banner {
+			position: relative;
+			height: 120rpx;
+			background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 50%, #FF6B6B 100%);
+			border-radius: 24rpx;
+			overflow: hidden;
+			box-shadow: 0 8rpx 24rpx rgba(255, 107, 107, 0.3);
+			transition: all 0.3s ease;
+			
+			&:active {
+				transform: translateY(-2rpx);
+				box-shadow: 0 12rpx 32rpx rgba(255, 107, 107, 0.4);
+			}
+			
+			.bargain-content {
+				position: relative;
+				z-index: 2;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 0 32rpx;
+				
+				.bargain-left {
+					display: flex;
+					align-items: center;
+					flex: 1;
+					
+					.bargain-icon {
+						width: 80rpx;
+						height: 80rpx;
+						background: rgba(255, 255, 255, 0.2);
+						border-radius: 50%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						margin-right: 24rpx;
+						backdrop-filter: blur(10rpx);
+						
+						.icon-text {
+							font-size: 36rpx;
+							color: #FFFFFF;
+							font-weight: 700;
+						}
+					}
+					
+					.bargain-info {
+						flex: 1;
+						
+						.bargain-title {
+							display: block;
+							font-size: 32rpx;
+							color: #FFFFFF;
+							font-weight: 600;
+							margin-bottom: 8rpx;
+						}
+						
+						.bargain-desc {
+							display: block;
+							font-size: 24rpx;
+							color: rgba(255, 255, 255, 0.8);
+							line-height: 32rpx;
+						}
+					}
+				}
+				
+				.bargain-right {
+					.bargain-arrow {
+						width: 60rpx;
+						height: 60rpx;
+						background: rgba(255, 255, 255, 0.2);
+						border-radius: 50%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						backdrop-filter: blur(10rpx);
+					}
+				}
+			}
+			
+			.bargain-decoration {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				pointer-events: none;
+				
+				.decoration-dot {
+					position: absolute;
+					border-radius: 50%;
+					background: rgba(255, 255, 255, 0.1);
+					
+					&.dot1 {
+						width: 40rpx;
+						height: 40rpx;
+						top: 20rpx;
+						right: 120rpx;
+						animation: float 3s ease-in-out infinite;
+					}
+					
+					&.dot2 {
+						width: 24rpx;
+						height: 24rpx;
+						top: 60rpx;
+						right: 80rpx;
+						animation: float 3s ease-in-out infinite 1s;
+					}
+					
+					&.dot3 {
+						width: 32rpx;
+						height: 32rpx;
+						top: 40rpx;
+						right: 200rpx;
+						animation: float 3s ease-in-out infinite 2s;
+					}
+				}
+			}
+		}
+	}
+	
+	@keyframes float {
+		0%, 100% {
+			transform: translateY(0rpx);
+		}
+		50% {
+			transform: translateY(-10rpx);
 		}
 	}
 	
