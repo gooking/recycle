@@ -150,7 +150,7 @@
 		</view>
 		
 		<!-- 我的砍价 -->
-		<view class="my-bargain-section">
+		<!-- <view class="my-bargain-section">
 			<view class="section-title">
 				<view class="title-left">
 					<text class="title-text">我的砍价</text>
@@ -196,7 +196,7 @@
 				<text class="empty-text">还没有砍价记录哦</text>
 				<text class="empty-desc">快去挑选心仪的商品开始砍价吧</text>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -402,7 +402,7 @@
 			 */
 			handleProductClick(product) {
 				uni.navigateTo({
-					url: `/pages/bargain/detail?id=${product.id}`
+					url: `/pages/shop/detail?id=${product.id}`
 				})
 			},
 			
@@ -411,7 +411,7 @@
 			 */
 			handleBargain(product) {
 				uni.navigateTo({
-					url: `/pages/bargain/detail?id=${product.id}&action=bargain`
+					url: `/pages/shop/detail?id=${product.id}`
 				})
 			},
 			

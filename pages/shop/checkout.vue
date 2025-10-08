@@ -177,6 +177,7 @@
 				// 总商品数
 				totalGoods: 0,
 				amountReal: 0,
+				kjid: '', // 砍价ID
 			}
 		},
 		
@@ -189,6 +190,7 @@
 		
 		onLoad(options) {
 			this.mode = options.mod || ''
+			this.kjid = options.kjid || ''
 			this.loadOrderData()
 			this.loadUserScore()
 		},
@@ -274,6 +276,7 @@
 					calculate: calculate == true,
 					goodsJsonStr: JSON.stringify(goodsJsonStr),
 					remark: this.orderRemark || '',
+					kjid: this.kjid || '',
 				}
 				if(this.address) {
 					orderData.provinceId = this.address.provinceId

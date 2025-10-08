@@ -99,7 +99,10 @@
 						<text class="progress-text">{{ kanjiaDetail.kanjiaInfo.helpNumber }} 人助力</text>
 					</view>
 				</view>
-				
+				<view v-if="kanjiaJoiner != uid" class="kanjia-joiner-user">
+					<image class="avatarUrl" :src="kanjiaDetail.joiner.avatarUrl" mode="aspectFill"></image>
+					<view class="nick">{{ kanjiaDetail.joiner.nick || ('好友' + kanjiaJoiner) }}</view>
+				</view>
 				<!-- 酷炫进度条 -->
 				<view class="progress-container">
 					<view class="progress-track">
@@ -118,27 +121,27 @@
 				</view>
 			</view>
 			<!-- 助力用户列表 -->
-			<view v-if="kanjiaDetail.helps" class="helper-section">
+			<view v-if="kanjiaDetail.helps && kanjiaDetail.helps.length > 0" class="helper-section">
 				<view class="section-header">
 					<text class="section-title">助力好友 ({{ kanjiaDetail.helps.length }})</text>
-					<view class="invite-tip">
+					<view class="invite-tip" @click="invite">
 						<text class="tip-text">邀请更多好友助力砍价</text>
 					</view>
 				</view>
 				
 				<view class="helper-list">
 					<view 
-						v-for="(helper, index) in helperList" 
+						v-for="(helper, index) in kanjiaDetail.helps" 
 						:key="index"
 						class="helper-item"
 					>
-						<image :src="helper.avatar" class="helper-avatar" mode="aspectFill"></image>
+						<image :src="helper.avatarUrl || '/static/images/avatarUrl.png'" class="helper-avatar" mode="aspectFill"></image>
 						<view class="helper-info">
-							<text class="helper-name">{{ helper.nickname }}</text>
-							<text class="helper-time">{{ formatTime(helper.helpTime) }}</text>
+							<text class="helper-name">{{ helper.nick }}</text>
+							<text class="helper-time">{{ helper.dateAdd }}</text>
 						</view>
 						<view class="helper-amount">
-							<text class="amount-text">-¥{{ helper.amount }}</text>
+							<text class="amount-text">-¥{{ helper.cutPrice }}</text>
 						</view>
 						<view class="helper-effect">
 							<view class="effect-circle"></view>
@@ -309,8 +312,17 @@
 					case 'buyImmediately': // 立即购买
 						this.buyNow()
 						break
+					case 'buyKanjia': // 砍价用当前价格购买
+						this.buyNowKanjia()
+						break
 					case 'kanjiaJoin': // 发起砍价
 						this.kanjiaJoin()
+						break
+					case 'invite': // 邀请助力
+						this.invite()
+						break
+					case 'kanjiaHelp': // 帮忙砍一刀
+						this.kanjiaHelp()
 						break
 				}
 			},
@@ -394,6 +406,19 @@
 					url: '/pages/shop/checkout?mod=buy'
 				})
 			},
+			// 砍价用当前价格购买
+			buyNowKanjia() {
+				uni.setStorageSync('bugGoodsInfo', {
+					goodsId: this.productId,
+					number: 1,
+					pic: this.productDetail.basicInfo.pic,
+					name: this.productDetail.basicInfo.name,
+					score: this.productDetail.basicInfo.minScore,
+				})
+				uni.navigateTo({
+					url: '/pages/shop/checkout?mod=buy&kjid=' + this.kanjiaSet.id
+				})
+			},
 			async updateCartBadge() {
 				await getApp()._shippingCarInfo()
 				if (this.shippingCarInfo) {
@@ -426,22 +451,40 @@
 				if(res.code == 0) {
 					this.kanjiaDetail = res.data
 					this.currentPrice = res.data.kanjiaInfo.curPrice
-					this.progressPercent = Math.floor((res.data.kanjiaInfo.minPrice / res.data.kanjiaInfo.curPrice) * 100)
+					
+					this.progressPercent = Math.floor(((this.kanjiaSet.originalPrice - res.data.kanjiaInfo.curPrice) / (this.kanjiaSet.originalPrice - res.data.kanjiaInfo.minPrice)) * 100)
 					// 底部按钮修改
-					this.buttonGroup = [
-						{
-							key: '111',
-							text: '邀请助力',
-							backgroundColor: '#30BCB7',
-							color: '#fff'
-						},
-						{
-							key: '222',
-							text: '当前价购买',
-							backgroundColor: '#FF6B6B',
-							color: '#fff'
-						}
-					]
+					if (this.kanjiaJoiner == this.uid) {
+						this.buttonGroup = [
+							{
+								key: 'invite',
+								text: '邀请助力',
+								backgroundColor: '#30BCB7',
+								color: '#fff'
+							},
+							{
+								key: 'buyKanjia',
+								text: '当前价购买',
+								backgroundColor: '#FF6B6B',
+								color: '#fff'
+							}
+						]
+					} else {
+						this.buttonGroup = [
+							{
+								key: 'kanjiaHelp',
+								text: '帮他助力',
+								backgroundColor: '#30BCB7',
+								color: '#fff'
+							},
+							{
+								key: 'kanjiaJoin',
+								text: '我也要砍价',
+								backgroundColor: '#FF6B6B',
+								color: '#fff'
+							}
+						]
+					}
 				} else {
 					// 底部显示发起砍价的按钮
 					this.buttonGroup = [
@@ -468,6 +511,47 @@
 						showCancel: false,
 					})
 					this.kanjiaJoiner = this.uid
+					this._kanjiaDetail()
+				} else {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+				}
+			},
+			invite() {
+				// 邀请助力
+				// #ifdef H5
+				if(!this.uid) {
+					uni.showToast({
+						title: '登录后分享',
+						icon: 'none'
+					})
+					return
+				}
+				const inviterUrl = location.protocol + '//' + location.host + '/#/pages/shop/detail?id='+ this.productId +'&inviter_id=' + this.uid +'&kanjiaJoiner=' + this.kanjiaJoiner
+				uni.setClipboardData({
+					data: '帮我助力一下吧~ \n\r' + inviterUrl,
+					success: () => {
+						uni.showToast({
+							title: '已复制到剪切板'
+						})
+					}
+				})
+				// #endif
+			},
+			async kanjiaHelp() {
+				// 帮助好友砍一刀 https://www.yuque.com/apifm/nu0f75/xfw31k
+				uni.showLoading({
+					title: ''
+				})
+				const res = await this.$wxapi.kanjiaHelp(this.token, this.kanjiaSet.id, this.kanjiaJoiner)
+				uni.hideLoading()
+				if (res.code == 0) {
+					uni.showModal({
+						content: '助力成功，非常感谢您的帮助~',
+						showCancel: false,
+					})
 					this._kanjiaDetail()
 				} else {
 					uni.showToast({
@@ -905,6 +989,20 @@
 				font-size: 24rpx;
 				color: #999;
 			}
+		}
+	}
+	.kanjia-joiner-user {
+		display: flex;
+		align-items: center;
+		padding-bottom: 32rpx;
+		.avatarUrl {
+			width: 100rpx;
+			height: 100rpx;
+			border-radius: 50%;
+		}
+		.nick {
+			margin-left: 16rpx;
+			font-size: 26rpx;
 		}
 	}
 </style>
