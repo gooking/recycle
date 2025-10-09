@@ -141,10 +141,7 @@
 						fail: err => {
 							console.error(err)
 							reject(err)
-							if (
-								err.errMsg ===
-								"getLocation:fail 频繁调用会增加电量损耗，可考虑使用 wx.onLocationChange 监听地理位置变化"
-							) {
+							if (err.errMsg.indexOf('getLocation:fail 频繁调用会增加电量损耗') != -1) {
 								uni.showToast({
 									title: "请勿频繁定位",
 									icon: "none",
@@ -197,10 +194,7 @@
 						fail: err => {
 							console.error(err)
 							reject(err)
-							if (
-								err.errMsg ===
-								"getLocation:fail 频繁调用会增加电量损耗，可考虑使用 wx.onLocationChange 监听地理位置变化"
-							) {
+							if (err.errMsg.indexOf('getLocation:fail 频繁调用会增加电量损耗') != -1) {
 								uni.showToast({
 									title: "请勿频繁定位",
 									icon: "none",

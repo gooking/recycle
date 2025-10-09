@@ -231,6 +231,7 @@
 	export default {
 		data() {
 			return {
+				payOrderNo: undefined, // 商户支付订单号
 				orderId: undefined,
 				orderDetail: undefined,
 				logisticsSteps: [], // 物流轨迹
@@ -251,6 +252,10 @@
 		},
 		
 		onLoad(options) {
+			if (options.payOrderNo) {
+				this.payOrderNo = options.payOrderNo
+				this.payLogs()
+			}
 			if (options.id) {
 				this.orderId = options.id
 				this.getOrderDetail()
@@ -263,6 +268,53 @@
 		},
 		
 		methods: {
+			/**
+			 * 获取充值/支付记录
+			 * https://www.yuque.com/apifm/nu0f75/vspgnx
+			 */
+			async payLogs() {
+			  uni.showLoading({
+				title: '',
+			  })
+			  const res = await this.$wxapi.payLogs({
+				token: this.token,
+				orderNo: this.payOrderNo
+			  })
+			  uni.hideLoading()
+			  if (res.code != 0) {
+				uni.showModal({
+				  content: res.msg,
+				  showCancel: false,
+				  success: () => {
+				  	uni.redirectTo({
+				  		url: '/pages/shop/order-list'
+				  	})
+				  }
+				})
+				return
+			  }
+			  const nextAction = res.data[0].nextAction
+			  if(!nextAction) {
+				wx.navigateTo({
+				  url: '/pages/shop/order-list',
+				})
+				return
+			  }
+			  const regex = /(\w+):(\d+)/g;
+			  const result = {}
+			  let match
+			  while ((match = regex.exec(nextAction)) !== null) {
+			    result[match[1]] = match[2]
+			  }
+			  if (result.type != 0) {
+			  	uni.redirectTo({
+			  		url: '/pages/shop/order-list'
+			  	})
+			  	return
+			  }
+			  this.orderId = result.id
+			  this.getOrderDetail()
+			},
 			/**
 			 * 获取订单详情
 			 * 文档地址：https://www.yuque.com/apifm/nu0f75/oamel8

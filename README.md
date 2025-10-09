@@ -41,6 +41,14 @@
 - [uni-ui](https://uniapp.dcloud.net.cn/component/uniui/uni-ui.html)
 - [api工厂前端中台](https://www.it120.cc/)
 
+## 上线准备
+
+### 微信小程序
+
+- 公众号后台，左侧菜单，开发-接口权限，开通 `getLocation` 接口（如果自己无法开通，可联系我协助）
+- 提交审核界面，小程序订单中心path，填写 `pages/shop/order-list`
+- 如果要求接入订单发货，公众号左侧菜单，订单管理，发货接入，地址填写 `pages/shop/order-detail?payOrderNo=${商品订单号}` ，然后在 `api工厂` 后台，商城管理-订单设置，开启同步发货状态到微信小程序
+
 ## 效果预览
 
 | H5登录页 |
