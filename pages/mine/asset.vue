@@ -64,14 +64,14 @@
 			}
 		},
 		onLoad() {
-			this.cashLogsV2()
+			this.cashLogsV3()
 			this.userAmountV2()
 			this._noticeLastOne()
 		},
 		onPullDownRefresh() {
 			uni.stopPullDownRefresh()
 			this.page = 1
-			this.cashLogsV2()
+			this.cashLogsV3()
 			this.userAmountV2()
 			this._noticeLastOne()
 		},
@@ -106,12 +106,12 @@
 					this.totalWithdraw = res.data.totalWithdraw
 				}
 			},
-			async cashLogsV2() {
+			async cashLogsV3() {
 				// https://www.yuque.com/apifm/nu0f75/khq7xu
 				uni.showLoading({
 					title: ''
 				})
-				const res = await this.$wxapi.cashLogsV2({
+				const res = await this.$wxapi.cashLogsV3({
 					token: this.token,
 					page: this.page,
 				})
