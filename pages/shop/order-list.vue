@@ -86,6 +86,9 @@
 							<view class="action-btn cancel-btn" @click.stop="cancelOrder(orderIndex, order)">
 								<text class="btn-text">取消订单</text>
 							</view>
+							<view class="action-btn pay-btn" @click.stop="_pay(orderIndex, order)">
+								<text class="btn-text">立即支付</text>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -197,9 +200,9 @@
 			 */
 			getStatusText(status) {
 				const statusMap = {
-					'0': '待发货',
-					'1': '待收货',
-					'2': '待收货',
+					'0': '待支付',
+					'1': '待发货',
+					'2': '待确认',
 					'3': '已完成',
 					'4': '已完成',
 					'-1': '已取消'
@@ -245,6 +248,125 @@
 				uni.navigateTo({
 					url
 				})
+			},
+			_pay(orderIndex, order) {
+				if (order.amountReal > 0) {
+					// 需要在线支付 TODO
+					this.onlinePay(order)
+				} else {
+					// 不需要在线支付
+					this.orderPayV2(order)
+				}
+			},
+			/**
+			 * 在线支付
+			 */
+			async onlinePay(orderInfo) {
+				const payMoney = orderInfo.amountReal
+				// #ifdef H5
+				this.onlinePayH5(orderInfo, payMoney)
+				// #endif
+				// #ifdef MP-WEIXIN
+				this.onlinePayMpWX(orderInfo, payMoney)
+				// #endif
+			},
+			/**
+			 * 在线支付[H5]
+			 */
+			async onlinePayH5(orderInfo, payMoney) {
+				uni.showLoading({
+					title: ''
+				})
+				const nextAction = {
+					type: 0,
+					id: orderInfo.id
+				}
+				// 发起H5支付 https://www.yuque.com/apifm/nu0f75/pv7gll
+				const res = await this.$wxapi.wxpayH5({
+					token: this.token,
+					money: payMoney,
+					payName: '支付订单:' + orderInfo.orderNumber,
+					nextAction: JSON.stringify(nextAction),
+				})
+				uni.hideLoading()
+				if (res.code == 0) {
+					location.href = res.data.mweb_url
+				} else {
+					uni.showModal({
+						content: res.msg,
+						showCancel: false
+					})
+				}
+			},
+			/**
+			 * 在线支付[微信小程序]
+			 */
+			async onlinePayMpWX(orderInfo, payMoney) {
+				uni.showLoading({
+					title: ''
+				})
+				const nextAction = {
+					type: 0,
+					id: orderInfo.id
+				}
+				// 微信小程序支付https://www.yuque.com/apifm/nu0f75/kffu74
+				const res = await this.$wxapi.wxpay({
+					token: this.token,
+					money: payMoney,
+					payName: '支付订单:' + orderInfo.orderNumber,
+					nextAction: JSON.stringify(nextAction),
+				})
+				uni.hideLoading()
+				if (res.code == 0) {
+					uni.requestPayment({
+						timeStamp: res.data.timeStamp,
+						nonceStr: res.data.nonceStr,
+						package: res.data.package,
+						signType: res.data.signType,
+						paySign: res.data.paySign,
+						fail: (err) => {
+							console.error(err);
+						},
+						success: () => {
+							orderInfo.status = 1
+							this.list.splice(orderIndex, 1, orderInfo)
+						}
+					})
+				} else {
+					uni.showModal({
+						content: res.msg,
+						showCancel: false
+					})
+				}
+			},
+			/**
+			 * 用余额支付订单
+			 * https://www.yuque.com/apifm/nu0f75/lwt2vi
+			 */
+			async orderPayV2(orderInfo) {
+				uni.showLoading({
+					title: ''
+				})
+				const res = await this.$wxapi.orderPayV2({
+					token: this.token,
+					orderId: orderInfo.id
+				})
+				uni.hideLoading()
+				if (res.code == 0) {
+					uni.redirectTo({
+					    url: `/pages/shop/order-detail?id=${orderInfo.id}`
+					})
+				} else {
+					uni.showModal({
+						content: res.msg,
+						showCancel: false,
+						success: () => {
+							uni.redirectTo({
+							    url: `/pages/shop/order-detail?id=${orderInfo.id}`
+							})
+						}
+					})
+				}
 			},
 		}
 	}
@@ -626,13 +748,18 @@
 						
 						.btn-text {
 							font-size: 24rpx;
-							color: #666;
+							
 						}
 						
 						&.cancel-btn {
+							color: #666;
 							&:active {
 								background: #F5F5F5;
 							}
+						}
+						&.pay-btn {
+							background: #FFC107;
+							color: #ffffff;
 						}
 					}
 				}

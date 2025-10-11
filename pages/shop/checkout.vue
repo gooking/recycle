@@ -125,7 +125,7 @@
 						<text class="price-value total-pay">{{ totalScore }}积分</text>
 					</view>
 					<view v-if="amountReal" class="price-item final-price">
-						<text class="price-label">剩余支付：</text>
+						<text class="price-label">订单总金额：</text>
 						<text class="price-value total-pay">￥{{ amountReal }}</text>
 					</view>
 				</view>
@@ -317,32 +317,143 @@
 						showCancel: false,
 						success: async () => {
 							/**
-							 * 用积分支付订单
-							 * https://www.yuque.com/apifm/nu0f75/lwt2vi
+							 * 判断是否要发起在线支付
 							 */
-							const resPay = await this.$wxapi.orderPayV2({
-								token: this.token,
-								orderId: res.data.id
-							})
-							if (resPay.code == 0) {
-								uni.redirectTo({
-								    url: `/pages/shop/order-detail?id=${res.data.id}`
-								})
+							if (res.data.amountReal - this.balance > 0) {
+								// 需要在线支付 TODO
+								this.onlinePay(res.data)
 							} else {
-								uni.showModal({
-									content: resPay.msg,
-									showCancel: false,
-									success: () => {
-										uni.redirectTo({
-										    url: `/pages/shop/order-detail?id=${res.data.id}`
-										})
-									}
-								})
+								// 不需要在线支付
+								this.orderPayV2(res.data)
 							}
 						}
 					})
 				}
-			}
+			},
+			/**
+			 * 在线支付
+			 */
+			async onlinePay(orderInfo) {
+				const payMoney = (orderInfo.amountReal - this.balance).toFixed(2)
+				// #ifdef H5
+				this.onlinePayH5(orderInfo, payMoney)
+				// #endif
+				// #ifdef MP-WEIXIN
+				this.onlinePayMpWX(orderInfo, payMoney)
+				// #endif
+			},
+			/**
+			 * 在线支付[H5]
+			 */
+			async onlinePayH5(orderInfo, payMoney) {
+				uni.showLoading({
+					title: ''
+				})
+				const nextAction = {
+					type: 0,
+					id: orderInfo.id
+				}
+				// 发起H5支付 https://www.yuque.com/apifm/nu0f75/pv7gll
+				const res = await this.$wxapi.wxpayH5({
+					token: this.token,
+					money: payMoney,
+					payName: '支付订单:' + orderInfo.orderNumber,
+					nextAction: JSON.stringify(nextAction),
+				})
+				uni.hideLoading()
+				if (res.code == 0) {
+					location.href = res.data.mweb_url
+				} else {
+					uni.showModal({
+						content: res.msg,
+						showCancel: false,
+						success: () => {
+							uni.redirectTo({
+							    url: `/pages/shop/order-detail?id=${orderInfo.id}`
+							})
+						}
+					})
+				}
+			},
+			/**
+			 * 在线支付[微信小程序]
+			 */
+			async onlinePayMpWX(orderInfo, payMoney) {
+				uni.showLoading({
+					title: ''
+				})
+				const nextAction = {
+					type: 0,
+					id: orderInfo.id
+				}
+				// 微信小程序支付https://www.yuque.com/apifm/nu0f75/kffu74
+				const res = await this.$wxapi.wxpay({
+					token: this.token,
+					money: payMoney,
+					payName: '支付订单:' + orderInfo.orderNumber,
+					nextAction: JSON.stringify(nextAction),
+				})
+				uni.hideLoading()
+				if (res.code == 0) {
+					uni.requestPayment({
+						timeStamp: res.data.timeStamp,
+						nonceStr: res.data.nonceStr,
+						package: res.data.package,
+						signType: res.data.signType,
+						paySign: res.data.paySign,
+						fail: (err) => {
+							console.error(err);
+							uni.redirectTo({
+							    url: `/pages/shop/order-detail?id=${orderInfo.id}`
+							})
+						},
+						success: () => {
+							uni.redirectTo({
+							    url: `/pages/shop/order-detail?id=${orderInfo.id}`
+							})
+						}
+					})
+				} else {
+					uni.showModal({
+						content: res.msg,
+						showCancel: false,
+						success: () => {
+							uni.redirectTo({
+							    url: `/pages/shop/order-detail?id=${orderInfo.id}`
+							})
+						}
+					})
+				}
+			},
+			/**
+			 * 用余额支付订单
+			 * https://www.yuque.com/apifm/nu0f75/lwt2vi
+			 */
+			async orderPayV2(orderInfo) {
+				uni.showLoading({
+					title: ''
+				})
+				const res = await this.$wxapi.orderPayV2({
+					token: this.token,
+					orderId: orderInfo.id
+				})
+				uni.hideLoading()
+				if (res.code == 0) {
+					uni.redirectTo({
+					    url: `/pages/shop/order-detail?id=${orderInfo.id}`
+					})
+				} else {
+					uni.showModal({
+						content: res.msg,
+						showCancel: false,
+						success: () => {
+							uni.redirectTo({
+							    url: `/pages/shop/order-detail?id=${orderInfo.id}`
+							})
+						}
+					})
+				}
+			},
 		}
 	}
 </script>
