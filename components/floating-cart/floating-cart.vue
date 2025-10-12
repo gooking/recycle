@@ -1,7 +1,7 @@
 <template>
 	<view class="floating-cart" @click="goToCart">
 		<view class="cart-icon">
-			<uni-icons type="cart" size="48rpx" color="#FFFFFF"></uni-icons>
+			<uni-icons type="cart" size="64rpx" color="#FFFFFF"></uni-icons>
 			<view v-if="this.shippingCarInfo" class="cart-badge">
 				<text class="badge-text">{{ this.shippingCarInfo.number > 99 ? '99+' : this.shippingCarInfo.number }}</text>
 			</view>
