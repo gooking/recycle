@@ -344,9 +344,7 @@
 			 * 联系客服
 			 */
 			contactService() {
-				uni.makePhoneCall({
-					phoneNumber: this.sysconfigMap.kf_tel
-				})
+				getApp().contactService()
 			},
 			
 			/**

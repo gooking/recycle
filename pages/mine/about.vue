@@ -40,9 +40,7 @@
 				}
 			},
 			kefu() {
-				uni.makePhoneCall({
-					phoneNumber: this.sysconfigMap.kf_tel
-				})
+				getApp().contactService()
 			},
 		}
 	}

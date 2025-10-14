@@ -259,6 +259,28 @@
 					_this.vuex('shippingCarInfo', null)
 				}
 			},
+			contactService() {
+				const _this = this.$vm ? this.$vm : this
+				// #ifdef MP-WEIXIN
+				_this.handleMiniProgramBanner()
+				// #endif
+				// #ifndef MP-WEIXIN
+				uni.makePhoneCall({
+					phoneNumber: _this.sysconfigMap.kf_tel
+				})
+				// #endif
+			},
+			handleMiniProgramBanner() {
+				const _this = this.$vm ? this.$vm : this
+				wx.openCustomerServiceChat({
+				  extInfo: {url: _this.sysconfigMap.customerServiceChatUrl },
+				  corpId: _this.sysconfigMap.customerServiceChatCorpId,
+				  success: res => {},
+				  fail: err => {
+					console.error(err)
+				  }
+				})
+			},
 		}
 	}
 </script>

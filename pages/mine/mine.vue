@@ -142,6 +142,19 @@
 			<button type="default" @click="loginOut">退出登陆</button>
 		</view>
 		<!-- #endif -->
+		<!-- #ifdef MP-WEIXIN -->
+		<view class="bottom-banner" @click="handleMiniProgramBanner">
+			<view class="banner-content">
+				<view class="banner-icon">
+					<text class="icon-emoji">🚀</text>
+				</view>
+				<text class="banner-text">我也要做小程序</text>
+				<view class="banner-arrow">
+					<uni-icons type="right" size="28rpx" color="#FFF"></uni-icons>
+				</view>
+			</view>
+		</view>
+		<!-- #endif -->
 		<view class="versionNum">ver {{ versionNum }}</view>
 	</view>
 </template>
@@ -213,9 +226,7 @@
 				})
 			},
 			contactService() {
-				uni.makePhoneCall({
-					phoneNumber: this.sysconfigMap.kf_tel
-				})
+				getApp().contactService()
 			},
 			goToFeedback() {
 				uni.navigateTo({
@@ -230,6 +241,12 @@
 			shareQR() {
 				// 分享二维码功能
 				console.log('分享二维码')
+			},
+			/**
+			 * 处理小程序横幅点击事件
+			 */
+			handleMiniProgramBanner() {
+				getApp().handleMiniProgramBanner()
 			},
 			async loginOut() {
 				// https://www.yuque.com/apifm/nu0f75/mg77aq
@@ -253,7 +270,7 @@
 	.mine-page {
 		background: #F2F7F9;
 		min-height: 100vh;
-
+		padding-bottom: 32rpx;
 		.user-info {
 			position: relative;
 			padding: 32rpx 28rpx 64rpx;
@@ -520,5 +537,60 @@
 		text-align: center;
 		margin-top: 32rpx;
 		color: #999;
+	}
+	
+	.bottom-banner {
+		margin: 32rpx 28rpx 48rpx;
+		
+		.banner-content {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			border-radius: 24rpx;
+			padding: 40rpx 48rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
+			transition: all 0.3s ease;
+			
+			&:active {
+				transform: scale(0.98);
+				opacity: 0.9;
+			}
+			
+			.banner-icon {
+				width: 56rpx;
+				height: 56rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: rgba(255, 255, 255, 0.2);
+				border-radius: 50%;
+				margin-right: 24rpx;
+				
+				.icon-emoji {
+					font-size: 32rpx;
+					line-height: 1;
+				}
+			}
+			
+			.banner-text {
+				flex: 1;
+				font-family: PingFang SC;
+				font-weight: 600;
+				font-size: 32rpx;
+				line-height: 44rpx;
+				color: #FFFFFF;
+				letter-spacing: 2rpx;
+			}
+			
+			.banner-arrow {
+				width: 28rpx;
+				height: 28rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
 	}
 </style>

@@ -587,9 +587,7 @@
 			 * 联系客服
 			 */
 			contactService() {
-				uni.makePhoneCall({
-					phoneNumber: this.sysconfigMap?.kf_tel || '400-000-0000'
-				})
+				getApp().contactService()
 			},
 			
 			/**
