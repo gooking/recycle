@@ -117,7 +117,20 @@
 		onLoad() {
 			// 页面加载时的初始化
 		},
-		
+		onShareAppMessage() {
+		    return {
+		      title: '兑换积分 - 积分商城 - ' + this.sysconfigMap.mallName,
+		      path: '/pages/score/exchange?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
+		onShareTimeline() {
+		    return {
+		      title: '兑换积分 - 积分商城 - ' + this.sysconfigMap.mallName,
+		      query: 'inviter_id=' + (this.uid || ''),
+		      imageUrl: this.sysconfigMap.share_pic
+		    }
+		},
 		methods: {
 			/**
 			 * 输入框内容变化处理

@@ -237,14 +237,14 @@
 		},
 		onShareAppMessage() {
 		    return {
-		      title: this.kanjiaDetail ? '帮我助力一下吧~' : this.sysconfigMap.mallName,
+		      title: this.kanjiaDetail ? '帮我助力一下吧~' : (this.productDetail.basicInfo.name + ' - ' + this.sysconfigMap.mallName),
 		      path: '/pages/shop/detail?id='+ this.productId +'&inviter_id=' + (this.uid || '') +'&kanjiaJoiner=' + this.kanjiaJoiner,
 			  imageUrl: this.productDetail.basicInfo.pic,
 		    }
 		},
-		onShareTimeline() {    
+		onShareTimeline() {
 		    return {
-		      title: this.kanjiaDetail ? '帮我助力一下吧~' : this.sysconfigMap.mallName,
+		      title: this.kanjiaDetail ? '帮我助力一下吧~' : (this.productDetail.basicInfo.name + ' - ' + this.sysconfigMap.mallName),
 		      query: 'id=' + this.productId + '&inviter_id=' + (this.uid || '') +'&kanjiaJoiner=' + this.kanjiaJoiner,
 		      imageUrl: this.productDetail.basicInfo.pic
 		    }

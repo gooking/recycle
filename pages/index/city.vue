@@ -18,7 +18,13 @@
 			// 页面加载时获取城市列表
 			this.cityV2()
 		},
-		
+		onShareAppMessage() {
+		    return {
+		      title: this.sysconfigMap.mallName + ' - 闲置废品换钱',
+		      path: '/pages/index/index?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
 		methods: {
 			/**
 			 * 获取所有城市数据

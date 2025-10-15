@@ -24,6 +24,13 @@
 		onShow() {
 
 		},
+		onShareAppMessage() {
+		    return {
+		      title: this.sysconfigMap.mallName + ' - 闲置废品换钱',
+		      path: '/pages/index/index?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
 		methods: {
 			async _cmsPage() {
 				// https://www.yuque.com/apifm/nu0f75/utgp8i

@@ -249,7 +249,20 @@
 				uni.stopPullDownRefresh()
 			}, 1000)
 		},
-		
+		onShareAppMessage() {
+		    return {
+		      title: '砍价专区 - 积分商城 - ' + this.sysconfigMap.mallName,
+		      path: '/pages/bargain/index?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
+		onShareTimeline() {
+		    return {
+		      title: '砍价专区 - 积分商城 - ' + this.sysconfigMap.mallName,
+		      query: 'inviter_id=' + (this.uid || ''),
+		      imageUrl: this.sysconfigMap.share_pic
+		    }
+		},
 		methods: {
 			/**
 			 * 加载Banner列表

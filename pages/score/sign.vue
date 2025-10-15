@@ -135,7 +135,20 @@
 			this.initData()
 			uni.stopPullDownRefresh()
 		},
-		
+		onShareAppMessage() {
+		    return {
+		      title: '签到赚积分 - 积分商城 - ' + this.sysconfigMap.mallName,
+		      path: '/pages/score/sign?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
+		onShareTimeline() {
+		    return {
+		      title: '签到赚积分 - 积分商城 - ' + this.sysconfigMap.mallName,
+		      query: 'inviter_id=' + (this.uid || ''),
+		      imageUrl: this.sysconfigMap.share_pic
+		    }
+		},
 		methods: {
 			// 初始化数据
 			async initData() {

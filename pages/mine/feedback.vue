@@ -70,6 +70,20 @@
 		onShow() {
 
 		},
+		onShareAppMessage() {
+		    return {
+		      title: '意见反馈 - ' + this.sysconfigMap.mallName,
+		      path: '/pages/mine/feedback?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
+		onShareTimeline() {
+		    return {
+		      title: '意见反馈 - ' + this.sysconfigMap.mallName,
+		      query: 'inviter_id=' + (this.uid || ''),
+		      imageUrl: this.sysconfigMap.share_pic
+		    }
+		},
 		methods: {
 			afterPicRead(event) {
 				this.fileList = this.fileList.concat(event.tempFiles)

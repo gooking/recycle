@@ -126,7 +126,20 @@
 			this.page++
 			this.loadProductList()
 		},
-		
+		onShareAppMessage() {
+		    return {
+		      title: '积分商城 - ' + this.sysconfigMap.mallName,
+		      path: '/pages/shop/goods-list?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
+		onShareTimeline() {
+		    return {
+		      title: '积分商城 - ' + this.sysconfigMap.mallName,
+		      query: 'inviter_id=' + (this.uid || ''),
+		      imageUrl: this.sysconfigMap.share_pic
+		    }
+		},
 		methods: {
 			
 			/**

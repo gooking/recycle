@@ -176,6 +176,13 @@
 			this.userDetail()
 			this.userAmountV2()
 		},
+		onShareAppMessage() {
+		    return {
+		      title: this.sysconfigMap.mallName + ' - 闲置废品换钱',
+		      path: '/pages/index/index?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
 		methods: {
 			async userDetail() {
 				// https://www.yuque.com/apifm/nu0f75/zgf8pu

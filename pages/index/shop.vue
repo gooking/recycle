@@ -51,6 +51,13 @@
 				this.fetchShopsV2(pos)
 			})
 		},
+		onShareAppMessage() {
+		    return {
+		      title: this.sysconfigMap.mallName + ' - 闲置废品换钱',
+		      path: '/pages/index/index?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
 		methods: {
 			/**
 			 * 获取门店列表

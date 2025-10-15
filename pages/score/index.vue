@@ -120,13 +120,13 @@
 			this.userAmountV2()
 			this._noticeLastOne()
 		},
-		onShareAppMessage: function() {    
+		onShareAppMessage() {
 		    return {
-		      title: this.sysconfigMap.mallName,
+		      title: this.sysconfigMap.mallName + ' - 闲置废品换钱',
 		      path: '/pages/index/index?inviter_id=' + (this.uid || ''),
 			  imageUrl: this.sysconfigMap.share_pic,
 		    }
-		  },
+		},
 		methods: {
 			navigateTo(url) {
 				uni.navigateTo({

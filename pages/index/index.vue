@@ -133,6 +133,20 @@
 				this.shopInfo = selectShop
 			}
 		},
+		onShareAppMessage() {
+		    return {
+		      title: this.sysconfigMap.mallName + ' - 闲置废品换钱',
+		      path: '/pages/index/index?inviter_id=' + (this.uid || ''),
+			  imageUrl: this.sysconfigMap.share_pic,
+		    }
+		},
+		onShareTimeline() {
+		    return {
+		      title: this.sysconfigMap.mallName + ' - 闲置废品换钱',
+		      query: 'inviter_id=' + (this.uid || ''),
+		      imageUrl: this.sysconfigMap.share_pic
+		    }
+		},
 		// 方法
 		methods: {
 			initConfigData() {
