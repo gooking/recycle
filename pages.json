@@ -116,6 +116,12 @@
 			}
 		},
 		{
+			"path": "pages/mine/discovery",
+			"style": {
+				"navigationBarTitleText": "实验室功能"
+			}
+		},
+		{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登陆"
@@ -262,6 +268,19 @@
 				"navigationBarBackgroundColor": "#F8F9FA",
 				"enablePullDownRefresh": true
 			}
+		}
+	],
+	"subPackages": [
+		{
+			"root": "sub_packages/course",
+			"pages": [
+				{
+					"path": "index",
+					"style": {
+						"navigationBarTitleText": "课程中心"
+					}
+				}
+			]
 		}
 	],
 	"globalStyle": {

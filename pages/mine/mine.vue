@@ -3,7 +3,8 @@
 		<!-- 用户信息区域 -->
 		<view v-if="userInfo" class="user-info" @click="info">
 			<view class="user-avatar">
-				<image class="avatar" :src="userInfo.base.avatarUrl || '/static/images/avatarUrl.png'" mode="aspectFit"></image>
+				<image class="avatar" :src="userInfo.base.avatarUrl || '/static/images/avatarUrl.png'" mode="aspectFit">
+				</image>
 			</view>
 			<view class="user-details">
 				<text class="username">{{ userInfo.base.nick || '环保卫士' }}</text>
@@ -111,13 +112,24 @@
 					<uni-icons type="right" size="32rpx" color="#999"></uni-icons>
 				</view>
 			</view>
-			
+
 			<view class="menu-divider"></view>
 			<view class="menu-item" @click="contactService">
 				<view class="menu-icon">
 					<image src="/static/images/mine/service.svg" mode="aspectFit"></image>
 				</view>
 				<text class="menu-title">联系客服</text>
+				<view class="menu-arrow">
+					<uni-icons type="right" size="32rpx" color="#999"></uni-icons>
+				</view>
+			</view>
+
+			<view class="menu-divider"></view>
+			<view class="menu-item" @click="goToDiscovery">
+				<view class="menu-icon">
+					<image src="/static/images/mine/scan.png" mode="aspectFit"></image>
+				</view>
+				<text class="menu-title">实验室功能</text>
 				<view class="menu-arrow">
 					<uni-icons type="right" size="32rpx" color="#999"></uni-icons>
 				</view>
@@ -170,18 +182,18 @@
 			}
 		},
 		onLoad() {
-			
+
 		},
 		onShow() {
 			this.userDetail()
 			this.userAmountV2()
 		},
 		onShareAppMessage() {
-		    return {
-		      title: this.sysconfigMap.mallName + ' - 闲置废品换钱',
-		      path: '/pages/index/index?inviter_id=' + (this.uid || ''),
-			  imageUrl: this.sysconfigMap.share_pic,
-		    }
+			return {
+				title: this.sysconfigMap.mallName + ' - 闲置废品换钱',
+				path: '/pages/index/index?inviter_id=' + (this.uid || ''),
+				imageUrl: this.sysconfigMap.share_pic,
+			}
 		},
 		methods: {
 			async userDetail() {
@@ -191,7 +203,7 @@
 				})
 				const res = await this.$wxapi.userDetail(this.token)
 				uni.hideLoading()
-				if(res.code == 0) {
+				if (res.code == 0) {
 					this.userInfo = res.data
 				}
 			},
@@ -202,7 +214,7 @@
 				})
 				const res = await this.$wxapi.userAmountV2(this.token)
 				uni.hideLoading()
-				if(res.code == 0) {
+				if (res.code == 0) {
 					this.balance = res.data.balance
 					this.score = res.data.score
 				}
@@ -238,6 +250,11 @@
 			goToFeedback() {
 				uni.navigateTo({
 					url: '/pages/mine/feedback'
+				})
+			},
+			goToDiscovery() {
+				uni.navigateTo({
+					url: '/pages/mine/discovery'
 				})
 			},
 			goToPointsOrders(status) {
@@ -278,6 +295,7 @@
 		background: #F2F7F9;
 		min-height: 100vh;
 		padding-bottom: 32rpx;
+
 		.user-info {
 			position: relative;
 			padding: 32rpx 28rpx 64rpx;
@@ -532,23 +550,26 @@
 			}
 		}
 	}
+
 	.login-out {
 		padding: 32rpx;
+
 		button {
 			background-color: #48C5A8;
 			color: #fff;
 		}
 	}
+
 	.versionNum {
 		font-size: 22rpx;
 		text-align: center;
 		margin-top: 32rpx;
 		color: #999;
 	}
-	
+
 	.bottom-banner {
 		margin: 32rpx 28rpx 48rpx;
-		
+
 		.banner-content {
 			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 			border-radius: 24rpx;
@@ -559,12 +580,12 @@
 			position: relative;
 			box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
 			transition: all 0.3s ease;
-			
+
 			&:active {
 				transform: scale(0.98);
 				opacity: 0.9;
 			}
-			
+
 			.banner-icon {
 				width: 56rpx;
 				height: 56rpx;
@@ -574,13 +595,13 @@
 				background: rgba(255, 255, 255, 0.2);
 				border-radius: 50%;
 				margin-right: 24rpx;
-				
+
 				.icon-emoji {
 					font-size: 32rpx;
 					line-height: 1;
 				}
 			}
-			
+
 			.banner-text {
 				flex: 1;
 				font-family: PingFang SC;
@@ -590,7 +611,7 @@
 				color: #FFFFFF;
 				letter-spacing: 2rpx;
 			}
-			
+
 			.banner-arrow {
 				width: 28rpx;
 				height: 28rpx;
