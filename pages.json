@@ -279,6 +279,19 @@
 					"style": {
 						"navigationBarTitleText": "课程中心"
 					}
+				},
+				{
+					"path": "detail",
+					"style": {
+						"navigationBarTitleText": "课程详情"
+					}
+				},
+				{
+					"path": "my",
+					"style": {
+						"navigationBarTitleText": "我的报名记录",
+						"enablePullDownRefresh": true
+					}
 				}
 			]
 		}

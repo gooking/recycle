@@ -36,6 +36,10 @@
 						<text class="title-text">精品课程</text>
 						<view class="title-decoration"></view>
 					</view>
+					<view class="my-records-btn" @click="goToMyRecords">
+						<uni-icons type="list" size="32rpx" color="#FFFFFF"></uni-icons>
+						<text class="records-text">我的报名记录</text>
+					</view>
 				</view>
 				
 				<page-box-empty v-if="!list || list.length == 0" title="暂无课程" subTitle="精彩课程即将上线~"></page-box-empty>
@@ -119,6 +123,15 @@
 		},
 		methods: {
 			/**
+			 * 跳转到我的报名记录
+			 */
+			goToMyRecords() {
+				uni.navigateTo({
+					url: 'my'
+				})
+			},
+			
+			/**
 			 * 加载Banner列表
 			 * https://www.yuque.com/apifm/nu0f75/ms21ki
 			 */
@@ -154,7 +167,9 @@
 			 * 课程报名处理
 			 */
 			handleEnroll(course) {
-				// todo: 跳转到报名页面
+				uni.navigateTo({
+					url: 'detail?id=' + course.id
+				})
 			},
 		}
 	}
@@ -419,6 +434,29 @@
 				height: 36rpx;
 				background: linear-gradient(135deg, #30BCB7, #49CCAD);
 				border-radius: 3rpx;
+			}
+		}
+		
+		.my-records-btn {
+			display: flex;
+			align-items: center;
+			gap: 8rpx;
+			padding: 12rpx 24rpx;
+			background: linear-gradient(135deg, #30BCB7 0%, #49CCAD 100%);
+			border-radius: 32rpx;
+			transition: all 0.3s ease;
+			box-shadow: 0 4rpx 12rpx rgba(48, 188, 183, 0.25);
+			
+			&:active {
+				background: linear-gradient(135deg, #2AA9A4 0%, #3EBB9D 100%);
+				transform: scale(0.95);
+				box-shadow: 0 2rpx 8rpx rgba(48, 188, 183, 0.3);
+			}
+			
+			.records-text {
+				font-size: 26rpx;
+				color: #FFFFFF;
+				font-weight: 500;
 			}
 		}
 	}
