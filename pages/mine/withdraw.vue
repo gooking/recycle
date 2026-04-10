@@ -208,7 +208,7 @@
 					title: ''
 				})
 				// https://www.yuque.com/apifm/nu0f75/qb6lg7
-				const res = await this.$wxapi.withDrawApplyV2({
+				const res = await this.$wxapi.withDrawApplyV3({
 					token: this.token,
 					money: amount,
 				})
